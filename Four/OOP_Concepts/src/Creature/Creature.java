@@ -11,6 +11,12 @@ public class Creature {
     public String name = "Unknown";//Accessible from anywhere
     private int age = 0; // Only accessible within the class
     protected  String type = "Creature"; // Accessible in subclasses
+    //                Protected
+    //1) The class itself (where it's defined).
+    //2) Subclasses (child classes) that extend the class
+    //                          (even if they are in a different package).
+    //3) Classes in the same package (even if they don’t extend the class)
+
     String environment = "Earth"; // Default (package-private):
                                  // Accessible within the same package
 
