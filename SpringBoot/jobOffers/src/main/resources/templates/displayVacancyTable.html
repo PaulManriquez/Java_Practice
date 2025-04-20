@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+    <title>Title</title>
+</head>
+<body>
+
+
+    <h1 class="text-primary">Vacancy List Available</h1>
+
+    <table class="table table-dark table-striped table-bordered table-hover">
+        <tr>
+            <th>Enterprise</th>
+            <th>ID </th>
+            <th>Name </th>
+            <th>Date </th>
+            <th>Salary </th>
+            <th>Description </th>
+            <th>Excels</th>
+            <th>Details</th>
+            <th>Delete</th>
+        </tr>
+
+        <tr th:each="ptrVacancy: ${vacancyList}">
+            <!--
+            <img th:src="@{/images/jobIcon.png}" width="60" height="60">
+            -->
+            <td>
+                <img th:src = "@{/images/{ptrImg} ( ptrImg = ${ptrVacancy.image}) }" width="60" height="60">
+            </td>
+            <td th:text="${ptrVacancy.id}"></td>
+            <td th:text="${ptrVacancy.name}"></td>
+            <td th:text="${ptrVacancy.date}"></td>
+            <td th:text="${ptrVacancy.salary}"></td>
+            <td th:text="${ptrVacancy.description}"></td>
+            <!--
+            <td th:text="${ptrVacancy.excels}"></td>
+            <td th:text="${ptrVacancy.excels == 1 ? 'Si' : 'No'}"></td>
+            -->
+            <td>
+                <span th:if="${ptrVacancy.excels==1}" class="badge text-bg-success">YES</span>
+                <span th:unless="${ptrVacancy.excels==1}" class="badge text-bg-danger">NO</span>
+            </td>
+
+            <td>
+                <!--VacanciesController.java | seeDetails -->
+                <a th:href="@{/vacancies/view/{id} (id=${ptrVacancy.id}) }" class="btn btn-success"> See details</a>
+            </td>
+
+            <td>
+                <a th:href="@{/vacancies/delete(id=${ptrVacancy.id}) }" class="btn btn-danger"> Delete</a>
+            </td>
+        </tr>
+
+
+    </table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+
+</body>
+</html>
