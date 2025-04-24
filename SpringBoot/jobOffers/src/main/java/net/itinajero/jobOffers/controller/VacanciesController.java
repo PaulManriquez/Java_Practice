@@ -18,14 +18,18 @@ public class VacanciesController {
 
     //====
     @GetMapping("/delete")//?id=3
-    public String deleteVacant(@RequestParam("id") int idVacant, Model model){
+    public String deleteVacant(
+            @RequestParam("id") int idVacant,
+            Model model){
         System.out.println("Deleting the vacant: "+ idVacant);
         model.addAttribute("idVacant",idVacant);
         return "vacants/deleteVacantMessage";
     }
 
     @GetMapping("/view/{id}")
-    public String seeDetails(@PathVariable("id") int idVacant , Model model){
+    public String seeDetails(
+            @PathVariable("id") int idVacant ,
+            Model model){
 
         Vacancy vacancy = serviceVacancies.searchByID(idVacant);
 

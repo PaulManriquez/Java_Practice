@@ -26,7 +26,7 @@ public class VacantServices_I implements IVacantsService{
             vacancy1.setDate(sdf.parse("08-02-2025"));
             vacancy1.setSalary(222.01);
             vacancy1.setExcels(1);
-            vacancy1.setImage("jobIcon.png");
+            vacancy1.setImage("logo1.png");
 
             //Job offer 2
             Vacancy vacancy2 = new Vacancy();
@@ -36,7 +36,7 @@ public class VacantServices_I implements IVacantsService{
             vacancy2.setDate(sdf.parse("08-02-2025"));
             vacancy2.setSalary(22.02);
             vacancy2.setExcels(0);
-            vacancy2.setImage("jobIcon2.png");
+            vacancy2.setImage("logo2.png");
 
             //Job offer 3
             Vacancy vacancy3 = new Vacancy();
@@ -46,7 +46,7 @@ public class VacantServices_I implements IVacantsService{
             vacancy3.setDate(sdf.parse("08-02-2025"));
             vacancy3.setSalary(22.03);
             vacancy3.setExcels(1);
-            vacancy3.setImage("jobIcon.png");
+            vacancy3.setImage("logo3.png");
 
             //
             listVacancies.add(vacancy1);

@@ -22,19 +22,8 @@ public class homeController {
     @GetMapping("/")
     public String displayHome(Model model){
 
-//        model.addAttribute("message","welcome to job offers");
-//        model.addAttribute("currentDate",new Date());
-
-        String jobName = "A job name1";
-        Date datePublished = new Date();
-        double salary = 900.22;
-        boolean current = true;
-
-        model.addAttribute("jobName",jobName);
-        model.addAttribute("datePublished",datePublished);
-        model.addAttribute("salary",salary);
-        model.addAttribute("current",current);
-
+        List<Vacancy> listVacancies = serviceVacancies.searchAllVacants();
+        model.addAttribute("vacantsList",listVacancies);
         return "home";
     }
 

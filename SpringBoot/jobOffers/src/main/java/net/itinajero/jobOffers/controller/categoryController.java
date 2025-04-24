@@ -24,10 +24,15 @@ public class categoryController {
     @PostMapping("/save")
     public String saveCategoryController(
             @RequestParam("Name") String name,
-            @RequestParam("Description") String description){
+            @RequestParam("Description") String description,
+            Model model){
 
         System.out.println("Category: " + name);
         System.out.println("Description: " + description);
+
+        model.addAttribute("Name",name);
+        model.addAttribute("Description",description);
+
         return "categories/listsCategories";
     }
 }
