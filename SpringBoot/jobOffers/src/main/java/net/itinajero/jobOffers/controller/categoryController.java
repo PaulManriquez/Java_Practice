@@ -2,10 +2,7 @@ package net.itinajero.jobOffers.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(value="/categories")
@@ -16,12 +13,14 @@ public class categoryController {
         return "categories/listsCategories";
     }
 
+    //return the template
     @GetMapping("/create")
     public String create(){
         return "categories/formCategory";
     }
 
-    @PostMapping("/save")
+    //@PostMapping("/save")
+    @RequestMapping(value = "/save",method=RequestMethod.POST)
     public String saveCategoryController(
             @RequestParam("Name") String name,
             @RequestParam("Description") String description,
