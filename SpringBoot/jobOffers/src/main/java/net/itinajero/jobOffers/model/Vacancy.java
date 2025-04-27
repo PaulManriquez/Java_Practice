@@ -10,6 +10,8 @@ public class Vacancy {
     private double salary;
     private Integer excels;
     private String image="noImage.png";
+    private String estatus = "NoEstatus";
+    private String details;
 
     public Integer getId() {
         return id;
@@ -67,8 +69,25 @@ public class Vacancy {
         this.image = image;
     }
 
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
     //Override because inherits from object class, and this class already has the toString method
     //
+
 
     @Override
     public String toString() {
@@ -80,6 +99,8 @@ public class Vacancy {
                 ", salary=" + salary +
                 ", excels=" + excels +
                 ", image='" + image + '\'' +
+                ", estatus='" + estatus + '\'' +
+                ", details='" + details + '\'' +
                 '}';
     }
 }

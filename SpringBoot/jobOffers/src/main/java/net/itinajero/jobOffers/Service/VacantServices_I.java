@@ -59,6 +59,7 @@ public class VacantServices_I implements IVacantsService{
 
     @Override
     public List<Vacancy> searchAllVacants(){
+
         return listVacancies;
     }
 
@@ -70,5 +71,10 @@ public class VacantServices_I implements IVacantsService{
         }
 
         return null;
+    }
+
+    @Override
+    public void save(Vacancy vacant) {
+        listVacancies.add(vacant);
     }
 }

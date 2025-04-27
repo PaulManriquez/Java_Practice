@@ -6,4 +6,5 @@ import net.itinajero.jobOffers.model.Vacancy;
 public interface IVacantsService {
     List<Vacancy> searchAllVacants();
     Vacancy searchByID(Integer idVacant);
+    void save(Vacancy vacant);
 }
