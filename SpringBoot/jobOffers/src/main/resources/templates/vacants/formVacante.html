@@ -28,7 +28,16 @@
         <div class="card">
           <h4 class="card-header"><strong>Datos de la oferta de trabajo</strong></h4>              
           <div class="card-body">
-            <form th:action="@{/vacancies/save}" method="post">
+            <form th:action="@{/vacancies/save}" method="post" th:object="${vacancy}">
+
+              <div th:if="${!#lists.isEmpty(#fields.errors('*'))}" class="alert alert-danger" role="alert">
+                Please check the next errors
+                <ul>
+                  <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                </ul>
+              </div>
+
+
               <div class="row">
                 <div class="col-md-3"> 
                   <div class="form-group">
@@ -134,8 +143,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>    
-    <script src="tinymce/tinymce.min.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/tinymce/tinymce.min.js}"></script>
     <script>
       
       $(function () {
@@ -143,15 +152,15 @@
         }
       );
       
-      /*
+
       tinymce.init({
           selector: '#detalles',
           plugins: "textcolor, table lists code",
           toolbar: " undo redo | bold italic | alignleft aligncenter alignright alignjustify \n\
                     | bullist numlist outdent indent | forecolor backcolor table code"
       });
-      
-      */
+
+
       
     </script>
   </body>

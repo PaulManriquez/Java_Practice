@@ -7,8 +7,11 @@ import org.springframework.beans.propertyeditors.CustomBooleanEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,17 +47,42 @@ public class VacanciesController {
     }
 
     @GetMapping("/createFormVacant")
-    public String create(){
+    public String create(Vacancy vacancy){
         return "vacants/formVacante";
     }
 
     @RequestMapping(value = "/save",method=RequestMethod.POST)
     public String saveCreateVacant(
-            Vacancy vacant
+            Vacancy vacant, /* <-- the attributes are filled automatically from the form*/
+            BindingResult result,
+            Model model,
+            RedirectAttributes attributes
     ){
+        // Handling Error when for example in the field of salary ofered, an no number char has been introduced
+        if (result.hasErrors()){
+            for(ObjectError error: result.getAllErrors()){
+                System.out.println("An error has happened: " + error.getDefaultMessage());
+            }
+            return "vacants/formVacante";
+        }
+        // <-------------------------------
+
         serviceVacancies.save(vacant);
         System.out.println(vacant.toString());
-        return "vacants/ListOfVacants";
+        List<Vacancy> myListOfVacants = serviceVacancies.searchAllVacants();
+        model.addAttribute("vacantsList",myListOfVacants);
+
+        // <- Since we use a redirect in the return and redirect is a GET request
+        // and here this controller is a POST request, the attribute do not exist in the
+        // new GET request
+//        model.addAttribute("msg","New Register Saved");
+// <-------------------------------------------------------------------------------------
+
+        //Redirect and Flash attributes
+        attributes.addFlashAttribute("msg", "New Register Saved");
+
+        return "redirect:/vacancies/index";
+        //return "vacants/listVacantes";
     }
 
     @InitBinder

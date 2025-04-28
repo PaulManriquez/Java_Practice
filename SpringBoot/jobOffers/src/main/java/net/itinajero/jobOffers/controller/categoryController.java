@@ -1,16 +1,28 @@
 package net.itinajero.jobOffers.controller;
 
+import net.itinajero.jobOffers.Service.ICategoriasService;
+import net.itinajero.jobOffers.model.Categoria;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(value="/categories")
 public class categoryController {
 
+    //Injection
+    @Autowired
+    private ICategoriasService  categoriesService;
+
     @GetMapping("/index")
     public String displayIndex(Model model){
-        return "categories/listsCategories";
+        List<Categoria> categoriasLista = categoriesService.buscarTodas();
+        System.out.println(categoriasLista);
+        model.addAttribute("ListaCategorias",categoriasLista);
+        return "categories/listCategorias";
     }
 
     //return the template
@@ -26,12 +38,17 @@ public class categoryController {
             @RequestParam("Description") String description,
             Model model){
 
-        System.out.println("Category: " + name);
-        System.out.println("Description: " + description);
+        //Create the new category
+        Categoria newCategoria = new Categoria();
+        newCategoria.setId( newCategoria.currentId + 1 );
+        newCategoria.setNombre(name);
+        newCategoria.setDescripcion(description);
+        System.out.println(newCategoria.toString());
 
-        model.addAttribute("Name",name);
-        model.addAttribute("Description",description);
+        //Save the new category created 
+        categoriesService.guardar(newCategoria);
 
-        return "categories/listsCategories";
+//        return "categories/listsCategories";
+        return "redirect:/categories/index";
     }
 }
