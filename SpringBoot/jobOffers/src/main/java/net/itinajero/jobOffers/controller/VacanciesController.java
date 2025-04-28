@@ -79,7 +79,7 @@ public class VacanciesController {
 // <-------------------------------------------------------------------------------------
 
         //Redirect and Flash attributes
-        attributes.addFlashAttribute("msg", "New Register Saved");
+        attributes.addFlashAttribute("msg", "New Category Saved");
 
         return "redirect:/vacancies/index";
         //return "vacants/listVacantes";

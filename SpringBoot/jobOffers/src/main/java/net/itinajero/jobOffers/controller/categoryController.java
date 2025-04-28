@@ -5,7 +5,9 @@ import net.itinajero.jobOffers.model.Categoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -31,24 +33,52 @@ public class categoryController {
         return "categories/formCategory";
     }
 
-    //@PostMapping("/save")
-    @RequestMapping(value = "/save",method=RequestMethod.POST)
+    @PostMapping("/save")
     public String saveCategoryController(
-            @RequestParam("Name") String name,
-            @RequestParam("Description") String description,
-            Model model){
+            @ModelAttribute Categoria categoria,
+            BindingResult result,
+            RedirectAttributes attributes,
+            Model model) {
 
-        //Create the new category
-        Categoria newCategoria = new Categoria();
-        newCategoria.setId( newCategoria.currentId + 1 );
-        newCategoria.setNombre(name);
-        newCategoria.setDescripcion(description);
-        System.out.println(newCategoria.toString());
+        if (result.hasErrors()) {
+            System.out.println("An error has happened in SaveCategoryController");
+            return "categories/formCategory";
+        }
 
-        //Save the new category created 
-        categoriesService.guardar(newCategoria);
+        categoria.setId(categoria.currentId + 1); // manually managing ID? Consider fixing this later.
+        categoriesService.guardar(categoria);
+        attributes.addFlashAttribute("msg", "New Register Saved");
 
-//        return "categories/listsCategories";
         return "redirect:/categories/index";
     }
+
+
+//    //@PostMapping("/save")
+//    @RequestMapping(value = "/save",method=RequestMethod.POST)
+//    public String saveCategoryController(
+//            @RequestParam("Name") String name,
+//            @RequestParam("Description") String description,
+//            RedirectAttributes attributes,
+//            BindingResult result,
+//            Model model){
+//
+////        if (result.hasErrors()){
+////            System.out.println("An error has happenned in SaveCategoryController");
+////            return "categories/formCategory";
+////        }
+//
+//        //Create the new category
+//        Categoria newCategoria = new Categoria();
+//        newCategoria.setId( newCategoria.currentId + 1 );
+//        newCategoria.setNombre(name);
+//        newCategoria.setDescripcion(description);
+//        System.out.println(newCategoria.toString());
+//
+//        //Save the new category created
+//        categoriesService.guardar(newCategoria);
+//        attributes.addFlashAttribute("msg", "New Register Saved");
+////        return "categories/listsCategories";
+//        return "redirect:/categories/index";
+//    }
+
 }
