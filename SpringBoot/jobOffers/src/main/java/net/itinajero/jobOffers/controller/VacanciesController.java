@@ -1,6 +1,8 @@
 package net.itinajero.jobOffers.controller;
 
+import net.itinajero.jobOffers.Service.ICategoriasService;
 import net.itinajero.jobOffers.Service.IVacantsService;
+import net.itinajero.jobOffers.model.Categoria;
 import net.itinajero.jobOffers.model.Vacancy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomBooleanEditor;
@@ -20,8 +22,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/vacancies")
 public class VacanciesController {
+
     @Autowired
     private IVacantsService serviceVacancies;
+
+    @Autowired
+    private ICategoriasService serviceCategories;
 
     //====
     @GetMapping("/delete")//?id=3
@@ -47,7 +53,12 @@ public class VacanciesController {
     }
 
     @GetMapping("/createFormVacant")
-    public String create(Vacancy vacancy){
+    public String create(Vacancy vacancy,
+                         Model model){
+
+        List<Categoria> categoryList = serviceCategories.buscarTodas();
+        model.addAttribute("listCategories",categoryList);
+        System.out.println(categoryList);
         return "vacants/formVacante";
     }
 

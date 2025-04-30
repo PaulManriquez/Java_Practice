@@ -13,6 +13,25 @@ public class CategoriasServiceImpl implements ICategoriasService {
 
     public CategoriasServiceImpl(){
         listaDeCategorias = new LinkedList<Categoria>();
+
+        Categoria categoria1 = new Categoria();
+        categoria1.setId(Categoria.currentId + 1);
+        categoria1.setDescripcion("Ventas descripcion");
+        categoria1.setNombre("Ventas");
+
+        Categoria categoria2 = new Categoria();
+        categoria2.setId(Categoria.currentId + 1);
+        categoria2.setDescripcion("Transporte descripcion");
+        categoria2.setNombre("Transporte");
+
+        Categoria categoria3 = new Categoria();
+        categoria3.setId(Categoria.currentId + 1);
+        categoria3.setDescripcion("Otros descripcion");
+        categoria3.setNombre("Otros");
+
+        listaDeCategorias.add(categoria1);
+        listaDeCategorias.add(categoria2);
+        listaDeCategorias.add(categoria3);
     }
 
     //Return all the categories existent in the list
