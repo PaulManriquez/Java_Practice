@@ -56,6 +56,7 @@ public class VacanciesController {
     public String create(Vacancy vacancy,
                          Model model){
 
+        // to the vacancy we add a new category by an category object
         List<Categoria> categoryList = serviceCategories.buscarTodas();
         model.addAttribute("listCategories",categoryList);
         System.out.println(categoryList);
@@ -79,9 +80,15 @@ public class VacanciesController {
         // <-------------------------------
 
         serviceVacancies.save(vacant);
-        System.out.println(vacant.toString());
+        System.out.println(vacant.toString() );
         List<Vacancy> myListOfVacants = serviceVacancies.searchAllVacants();
         model.addAttribute("vacantsList",myListOfVacants);
+
+
+//        Integer categoriaId = vacant.getCategoria().getId();
+//        Categoria fullCategoria = categoriasService.buscarPorId(categoriaId); // assumes this method exists
+//        vacant.setCategoria(fullCategoria); // assign complete category
+
 
         // <- Since we use a redirect in the return and redirect is a GET request
         // and here this controller is a POST request, the attribute do not exist in the

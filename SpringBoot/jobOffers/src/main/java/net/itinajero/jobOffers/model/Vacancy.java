@@ -12,6 +12,7 @@ public class Vacancy {
     private String image="noImage.png";
     private String estatus = "NoEstatus";
     private String details;
+    private Categoria categoria;
 
     public Integer getId() {
         return id;
@@ -85,9 +86,16 @@ public class Vacancy {
         this.details = details;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
     //Override because inherits from object class, and this class already has the toString method
     //
-
 
     @Override
     public String toString() {
@@ -101,6 +109,7 @@ public class Vacancy {
                 ", image='" + image + '\'' +
                 ", estatus='" + estatus + '\'' +
                 ", details='" + details + '\'' +
+                ", categoria=" + categoria.toString() +
                 '}';
     }
 }

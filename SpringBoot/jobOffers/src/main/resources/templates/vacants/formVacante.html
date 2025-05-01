@@ -57,9 +57,23 @@
                   <div class="form-group">
                     <label for="categoria">Categoría</label>
 
-                    <select class="form-control" name="categoria" id="categoria">
-                      <option th:each="ptrCategory: ${listCategories}" value="1" th:text="${ptrCategory.getNombre}">Ventas</option>
+<!--                    <select class="form-control" th:field="*{ptrCategory.id}" id="categoria">-->
+<!--                      <option th:each="ptrCategory: ${listCategories}"-->
+<!--                              th:value="${ptrCategory.id}"-->
+<!--                              th:text="${ptrCategory.getNombre}">-->
+<!--                              Ventas-->
+<!--                      </option>-->
+<!--                    </select>-->
+
+<!--                                             th:field="*{categoria.id} | Vacancy has Categoria categoria"
+                    is sending to VacanciesController/save with the corresponding categoria.id for the Vacancy-->
+                    <select class="form-control" th:field="*{categoria.id}" >
+                      <option   th:each="ptrCategory : ${listCategories}"
+                                th:value="${ptrCategory.id}"
+                                th:text="${ptrCategory.nombre}">
+                      </option>
                     </select>
+
 
                   </div>
                 </div>
