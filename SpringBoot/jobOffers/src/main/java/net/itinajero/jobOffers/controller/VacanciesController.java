@@ -79,15 +79,19 @@ public class VacanciesController {
         }
         // <-------------------------------
 
+        //Get the ID from the Form, and, set the Categoria object to the vacant
+        Integer categoriaId = vacant.getCategoria().getId(); //Get the category ID of the vacant, according with the passed in the form
+        Categoria fullCategoria = serviceCategories.buscarPorId(categoriaId); // search the id category by ID
+        vacant.setCategoria(fullCategoria); // assign to the vacant the according object , is set to the vacant
+
+        //save and print the new vacant
         serviceVacancies.save(vacant);
         System.out.println(vacant.toString() );
+        System.out.println(vacant.getCategoria().toString());
+
+        //Sent to the model the new list of vacants
         List<Vacancy> myListOfVacants = serviceVacancies.searchAllVacants();
         model.addAttribute("vacantsList",myListOfVacants);
-
-
-//        Integer categoriaId = vacant.getCategoria().getId();
-//        Categoria fullCategoria = categoriasService.buscarPorId(categoriaId); // assumes this method exists
-//        vacant.setCategoria(fullCategoria); // assign complete category
 
 
         // <- Since we use a redirect in the return and redirect is a GET request

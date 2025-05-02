@@ -50,11 +50,18 @@
               <tbody>
 
                 <tr th:each="ptrVacant: ${vacantsList}">
-                  <td>Ventas</td>
-                  <td th:text="${ptrVacant.getName}"></td>
-                  <td th:text="${ptrVacant.getDate}"></td>
-                  <td th:text="${ptrVacant.getEstatus}"></td>
-                  <td th:text="${ptrVacant.getExcels == 1 ? 'Si' : 'No' }"></td>
+
+                  <td th:text="${ptrVacant.CategoriaNombre}"></td>
+                  <td th:text="${ptrVacant.Name}"></td>
+                  <td th:text="${ptrVacant.date}"></td>
+                  <td th:text="${ptrVacant.estatus}"></td>
+                  <td th:text="${ptrVacant.excels == 1 ? 'Si' : 'No'}"></td>
+                  <!--                  <td th:text="${ptrVacant.getCategoriaNombre}"></td>-->
+
+<!--                  <td th:text="${ptrVacant.getNombre}"></td>-->
+<!--                  <td th:text="${ptrVacant.getDate}"></td>-->
+<!--                  <td th:text="${ptrVacant.getEstatus}"></td>-->
+<!--                  <td th:text="${ptrVacant.getExcels == 1 ? 'Si' : 'No' }"></td>-->
                   <td>
                     <a href="#" class="btn btn-success btn-sm" role="button" title="Editar el registro."><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
                     <a href="#" class="btn btn-success btn-sm confirmar" role="button" title="Eliminar el registro."><i class="fas fa-trash" aria-hidden="true"></i></a>

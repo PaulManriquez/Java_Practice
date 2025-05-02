@@ -94,6 +94,11 @@ public class Vacancy {
         this.categoria = categoria;
     }
 
+    public String getCategoriaNombre() {
+        return categoria != null ? categoria.getNombre() : "Sin categoría";
+    }
+
+
     //Override because inherits from object class, and this class already has the toString method
     //
 
