@@ -28,7 +28,7 @@
         <div class="card">
           <h4 class="card-header"><strong>Datos de la oferta de trabajo</strong></h4>              
           <div class="card-body">
-            <form th:action="@{/vacancies/save}" method="post" th:object="${vacancy}">
+            <form th:action="@{/vacancies/save}" method="post" th:object="${vacancy}" enctype="multipart/form-data">
 
               <div th:if="${!#lists.isEmpty(#fields.errors('*'))}" class="alert alert-danger" role="alert">
                 Please check the next errors
@@ -116,7 +116,7 @@
                 <div class="col-md-3"> 
                   <div class="form-group">
                     <label for="archivoImagen">Imagen</label>
-                    <input type="file" class="form-control-file" name="image" th:field="*{image}"  id="archivoImagen">
+                    <input type="file" class="form-control-file" name="archivoImagen"   id="archivoImagen">
                   </div>
                 </div>
               </div> 
