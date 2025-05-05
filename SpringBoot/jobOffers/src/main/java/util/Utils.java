@@ -12,6 +12,9 @@ public class Utils {
 
     public static String saveFile(MultipartFile multiPart, String route) {
         String originalName = multiPart.getOriginalFilename(); // "photo.png"
+        originalName = originalName.replace(" ", "-");//Ensure the file name has no spaces
+        originalName = randomAlphaNumeric(8) + originalName; //Do a unique numer for the pho uploaded
+
         File directory = new File(route);//Create the directory file object with the route to place
         //the image and be able to create the dir and path to place it
 
@@ -29,6 +32,16 @@ public class Utils {
             System.out.println("Error: " + e.getMessage());
             return null;
         }
+    }
+
+    public static String randomAlphaNumeric(int count){
+        String CHARACTERES = "ABCDEFJHIJKMLNOPQRSTUVWXYZ123456789";
+        StringBuilder builder = new StringBuilder();
+        while(count -- !=0){
+            int character = (int) (Math.random() * CHARACTERES.length());
+            builder.append(CHARACTERES.charAt(character));
+        }
+        return builder.toString();
     }
 
 }
