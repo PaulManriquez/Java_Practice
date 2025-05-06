@@ -1,8 +1,12 @@
 package net.itinajero;
 
 import net.itinajero.model.Categoria;
+import net.itinajero.model.Perfil;
+import net.itinajero.model.Usuario;
 import net.itinajero.model.Vacante;
 import net.itinajero.repository.CategoriasRepository;
+import net.itinajero.repository.PerfilRepository;
+import net.itinajero.repository.UsuarioRepository;
 import net.itinajero.repository.VacantesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +29,12 @@ public class JpaDemoApplication implements CommandLineRunner {
 
 	@Autowired
 	private VacantesRepository repoVacantes;
+
+	@Autowired
+	private PerfilRepository repoPerfil;
+
+	@Autowired
+	private UsuarioRepository repoUsuarios;
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpaDemoApplication.class, args);
@@ -59,9 +69,76 @@ public class JpaDemoApplication implements CommandLineRunner {
 		//searchallByPaginationSORTED(0,3);
 
 		//============ VACANTES ============
-		saveVacante();
-		searchVacantes();
+		//saveVacante();
+		//searchVacantes();
+
+		//============ PERFILES =============
+		//createPerfilesApplication();
+		//createAUserWithPerfils();
+		searchUser(1);
 	}
+
+	//Perfiles Aplication
+	public void searchUser(int Id){
+		System.out.println("============= GET PERFILES INFO BY ID =============");
+		Optional<Usuario> optional = repoUsuarios.findById(Id);
+		if(optional.isPresent()){
+			Usuario u = optional.get(); //<-- get the object if exist in DataBase
+			System.out.println("User:" + u.getNombre());
+			System.out.println("Perfiles joined:" );
+			for(Perfil ptrPerfil: u.getPerfiles()){
+				System.out.println(ptrPerfil.getPerfil());
+			}
+		}else{
+			System.out.println("User do not exist");
+		}
+		System.out.println("============= GET PERFILES INFO BY ID =============");
+	}
+
+	//Create a user with 2 Perfiles
+	private void createAUserWithPerfils(){
+		Usuario user = new Usuario();
+		user.setNombre("Paul Manriquez");
+		user.setEmail("some@gmail.com");
+		user.setFechaRegistro(new Date());
+		user.setUsername("PaulUsername");
+		user.setPassword("1234");
+		user.setEstatus(1);
+
+		Perfil per1 = new Perfil();
+		per1.setId(2);
+
+		Perfil per2 = new Perfil();
+		per2.setId(2);
+
+		user.agregar(per1);
+		user.agregar(per2);
+
+		repoUsuarios.save(user);
+	}
+
+	private void createPerfilesApplication(){
+		repoPerfil.saveAll(getPerfilesApplication());
+	}
+
+	private List<Perfil> getPerfilesApplication(){
+		System.out.println("============= GET PERFILES APPLICATION =============");
+		List<Perfil> perfilList = new LinkedList<Perfil>();
+
+		Perfil per1= new Perfil();
+		per1.setPerfil("SUPERVISOR");
+
+
+		Perfil per2= new Perfil();
+		per2.setPerfil("ADMINISTRADOR");
+
+		Perfil per3= new Perfil();
+		per3.setPerfil("USUARIO");
+
+		perfilList.add(per1); perfilList.add(per2); perfilList.add(per3);
+		return perfilList;
+	}
+
 
 	//=== Vacantes
 
