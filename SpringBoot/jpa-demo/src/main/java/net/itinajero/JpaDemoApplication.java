@@ -1,7 +1,9 @@
 package net.itinajero;
 
 import net.itinajero.model.Categoria;
+import net.itinajero.model.Vacante;
 import net.itinajero.repository.CategoriasRepository;
+import net.itinajero.repository.VacantesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +22,9 @@ public class JpaDemoApplication implements CommandLineRunner {
 
 	@Autowired
 	private CategoriasRepository repoCategorias;
+
+	@Autowired
+	private VacantesRepository repoVacantes;
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpaDemoApplication.class, args);
@@ -50,8 +56,53 @@ public class JpaDemoApplication implements CommandLineRunner {
 		//delateAllByJPA();
 		//searchAllSortedDescJPA();
 		//searchByPaginationJPA(0,3);
-		searchallByPaginationSORTED(0,3);
+		//searchallByPaginationSORTED(0,3);
+
+		//============ VACANTES ============
+		//saveVacante();
+		searchVacantes();
 	}
+
+	//=== Vacantes
+
+	private void saveVacante(){
+		System.out.println("============= SAVING A VACANT REGISTER =============");
+		Vacante vac = new Vacante();
+
+		vac.setNombre("VacantName1");
+		vac.setDescription("VacantDescription1");
+		vac.setFecha(new Date());
+		vac.setSalario(12.22);
+		vac.setDestacado(1);
+		//vac.setImagen();
+		vac.setEstatus("active");
+		vac.setDetalles("SomeDetails");
+
+
+		repoVacantes.save(vac);
+		System.out.println(vac);
+		//System.out.println(cat.toString());
+		System.out.println("=============                           =============");
+	}
+
+	private void searchVacantes(){
+
+		System.out.println("============= SEARCHING A VACANT REGISTER =============");
+		List<Vacante> lista = repoVacantes.findAll();
+
+		for (Vacante ptrVacante : lista) {
+			String categoriaNombre = ptrVacante.getCategoria() != null
+					? ptrVacante.getCategoria().getNombre()
+					: "Sin categoría";
+
+			System.out.println(ptrVacante.getId() + " " + ptrVacante.getNombre() +
+					" Categoria: " + categoriaNombre);
+		}
+
+		System.out.println("============= SEARCHING A VACANT REGISTER =============");
+	}
+
+	//===========================
 
 	private void searchallByPaginationSORTED(int pageNumber,int pageSize){
 		System.out.println("============= SEARCH ALL PAGINATION SORTED BY NOMBRE JPA =============");
