@@ -59,7 +59,7 @@ public class JpaDemoApplication implements CommandLineRunner {
 		//searchallByPaginationSORTED(0,3);
 
 		//============ VACANTES ============
-		//saveVacante();
+		saveVacante();
 		searchVacantes();
 	}
 
@@ -69,15 +69,18 @@ public class JpaDemoApplication implements CommandLineRunner {
 		System.out.println("============= SAVING A VACANT REGISTER =============");
 		Vacante vac = new Vacante();
 
-		vac.setNombre("VacantName1");
+		vac.setNombre("==> VacantName1");
 		vac.setDescription("VacantDescription1");
 		vac.setFecha(new Date());
 		vac.setSalario(12.22);
 		vac.setDestacado(1);
-		//vac.setImagen();
+		vac.setImagen("no-image.jpg");
 		vac.setEstatus("active");
-		vac.setDetalles("SomeDetails");
+		vac.setDetalles("<h2> SomeDetails </h2>");
 
+		Categoria cat = new Categoria();
+		cat.setId(5);
+		vac.setCategoria(cat);
 
 		repoVacantes.save(vac);
 		System.out.println(vac);
