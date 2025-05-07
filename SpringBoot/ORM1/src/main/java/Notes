@@ -1,0 +1,17 @@
+// ==========================
+// ✅ Why Use Optional in Java (and JPA)
+// ==========================
+
+/*
+1️⃣ Null Safety:
+   - Avoids NullPointerException by forcing you to handle the presence or absence of a value.
+   - Example:
+       Optional<Person> opt = repo.findById(1);
+       opt.ifPresent(p -> System.out.println(p.getName()));
+
+2️⃣ Cleaner, More Readable Code:
+   - Eliminates repetitive null checks.
+   - Encourages functional style: map(), orElse(), ifPresent(), etc.
+   - Example:
+       String name = opt.map(Person::getName).orElse("Default Name");
+*/
