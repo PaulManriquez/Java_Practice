@@ -3,6 +3,9 @@ package com.example.ORM2.Model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "person2")
 public class Person2 {
@@ -13,6 +16,12 @@ public class Person2 {
     private String name;
 
     private Integer age;
+
+    //Exists only in the Java class (Person2), not as a physical column in the post table.
+    //The relationship is managed by the post table through its person2_id foreign key.
+    @OneToMany(mappedBy = "person2", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
+    //=====================================================================================
 
     // Getters and setters
 
