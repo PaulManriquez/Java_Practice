@@ -4,6 +4,7 @@ package com.example.ORM2.Model;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -20,8 +21,18 @@ public class Person2 {
     //Exists only in the Java class (Person2), not as a physical column in the post table.
     //The relationship is managed by the post table through its person2_id foreign key.
     @OneToMany(mappedBy = "person2", cascade = CascadeType.ALL)
-    private List<Post> posts = new ArrayList<>();
+    private List<Post> posts = new LinkedList<>();
     //=====================================================================================
+
+    public void addPost(Post newPost) {
+        if (newPost != null) {
+            if (posts == null) {
+                posts = new LinkedList<>();
+            }
+            newPost.setPerson2(this); // maintain bidirectional link
+            posts.add(newPost);
+        }
+    }
 
     // Getters and setters
 
