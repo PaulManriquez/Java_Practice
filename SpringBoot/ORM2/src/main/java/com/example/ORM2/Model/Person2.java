@@ -21,6 +21,7 @@ public class Person2 {
     //Exists only in the Java class (Person2), not as a physical column in the post table.
     //The relationship is managed by the post table through its person2_id foreign key.
     @OneToMany(mappedBy = "person2", cascade = CascadeType.ALL)
+<<<<<<< HEAD
     private List<Post> posts = new LinkedList<>();
     //=====================================================================================
 
@@ -35,7 +36,25 @@ public class Person2 {
     }
 
     // Getters and setters
+=======
+    private List<Post> posts;
+    //=====================================================================================
 
+    public void savePost(Post post){
+        if(posts == null){
+            posts = new LinkedList<>();
+        }
+        // This sets both sides of the relationship
+        posts.add(post);
+        post.setPerson2(this);
+    }
+>>>>>>> 544cbf381e61e3c05821ac1bcd3090e9050e7997
+
+    public List<Post> getListOfPost(){
+        return posts;
+    }
+
+    // Getters and setters
     public Integer getId() {
         return id;
     }
