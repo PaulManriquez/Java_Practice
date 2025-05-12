@@ -1,0 +1,84 @@
+// ==================== Hibernate & Spring JPA Concepts ====================
+
+// 🔄 Session:
+// A Hibernate-managed connection to the database.
+// It tracks entities and handles fetching/saving data.
+// Closed automatically after a @Transactional method finishes.
+// Lazy loading needs the session to still be open.
+
+// 🧾 Transaction (@Transactional):
+// Defines a unit of work that should be executed fully or not at all.
+// Starts a Hibernate session and commits or rolls back at the end.
+// Required for lazy loading to work properly inside service methods.
+
+// 🧍 Proxy:
+// A placeholder object created by Hibernate for lazy-loaded fields.
+// Actual data is loaded only when accessed (e.g. .getStudents()).
+// If the session is closed, accessing a proxy throws LazyInitializationException.
+
+// ☕ Bean:
+// A Java object managed by the Spring container.
+// Created using annotations like @Service, @Component, @Repository, etc.
+// Enables features like @Autowired and @Transactional.
+
+// ⚙️ Lazy vs Eager Loading:
+// - LAZY: Load data only when accessed (default for @OneToMany).
+// - EAGER: Load related data immediately when parent is loaded.
+// Lazy loading needs an open session and is best used inside a @Transactional context.
+
+// Example:
+// @OneToMany(fetch = FetchType.LAZY)
+// private List<Student> students;
+
+// If accessed outside a @Transactional method managed by Spring,
+// this will throw a LazyInitializationException.
+
+// ==================== Java & Spring Beans Summary ====================
+
+// ☕ Java Bean:
+// - A simple Java class with private fields, public getters/setters, and a no-arg constructor.
+// - Example: data models like Student, University, etc.
+
+// 🌱 Spring Bean:
+// - A Java object managed by the Spring container (ApplicationContext).
+// - Created automatically using annotations like @Component, @Service, @Repository, or @Controller.
+// - Enables features like @Autowired (dependency injection), @Transactional, AOP, etc.
+
+// 🔧 Why Use Spring Beans?
+// - Reusability: You write the logic once and reuse it across the app.
+// - Dependency Injection: Spring wires dependencies automatically.
+// - Lifecycle Management: Spring controls creation, injection, and destruction of beans.
+
+// ✅ To make a class a Spring bean:
+// @Service         // for service-layer logic
+// @Repository      // for data access layer (DAOs)
+// @Component       // generic bean
+// @Controller      // for web controllers (Spring MVC)
+
+// 📌 Remember:
+// - Only Spring beans can use features like @Transactional correctly.
+// - You must call bean methods through Spring (not directly from main()) for annotations to work.
+
+// ==================== LAZY vs EAGER Fetch Summary ====================
+
+// @OneToMany(mappedBy = "university", fetch = FetchType.LAZY)
+// - Students are NOT loaded when University is fetched.
+// - Students are only loaded when .getStudents() is called.
+// - Requires an open Hibernate Session => needs @Transactional.
+// - More efficient if student data isn't always needed.
+
+// @OneToMany(mappedBy = "university", fetch = FetchType.EAGER)
+// - Students are loaded IMMEDIATELY with the University.
+// - No need for open session or @Transactional to access students.
+// - Can cause performance issues if students list is large.
+// - Risk of circular references in JSON APIs (infinite loop).
+
+// 💡 Your Method: getAllStudentsByUniversity()
+// - Works with LAZY if @Transactional is present and called from a Spring-managed bean.
+// - Works with EAGER even without @Transactional (but may load more data than needed).
+
+// ✅ Best Practice:
+// - Use LAZY by default.
+// - Use EAGER only when you ALWAYS need the related data.
+// - Or use custom JPQL with JOIN FETCH to control exactly what gets loaded.
+

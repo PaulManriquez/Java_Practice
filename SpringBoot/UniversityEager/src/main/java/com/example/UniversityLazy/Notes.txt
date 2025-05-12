@@ -1,0 +1,25 @@
+// ======================= FETCH TYPE NOTES ==========================
+//
+// ❓ Do both sides of a relationship need to have the same FetchType?
+// ❌ No — fetch types are INDEPENDENT for each side of the relationship.
+//
+// 🔁 Relationship Direction Explained:
+//
+// @OneToMany(mappedBy = "university", fetch = FetchType.LAZY)
+// - Controls how "students" are loaded when you load a University.
+// - LAZY: Students are fetched only when .getStudents() is called.
+// - EAGER: Students are fetched immediately when the University is loaded.
+//
+// @ManyToOne(fetch = FetchType.EAGER)
+// - Controls how "university" is loaded when you load a Student.
+// - EAGER: University is fetched immediately with the Student.
+// - LAZY: University is fetched only when .getUniversity() is called.
+//
+// ✅ You CAN mix fetch types.
+//    Example: One side LAZY, other side EAGER is valid and common.
+//
+// 🔒 Best Practices:
+// - Use LAZY for @OneToMany to avoid loading large lists unnecessarily.
+// - Use EAGER (default) for @ManyToOne since it's usually a single reference.
+//
+// ================================================================
