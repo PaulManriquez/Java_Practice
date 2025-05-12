@@ -43,4 +43,32 @@ public class UniversityService {
             System.out.println("THERE WAS AN ERROR");
         }
     }
+
+    public void findUniversitiesBetweenIDs(int idLeft, int idRight){
+        List<University> uniList = repoUniversity.findByIdBetween(idLeft,idRight);
+
+        if(!uniList.isEmpty()){
+            System.out.println("Here is the universities between IDS: "
+                    + idLeft + " " + idRight);
+
+            for(University ptrU: uniList){
+                System.out.println(ptrU.getName() + " ID:" + ptrU.getId());
+            }
+        }else{
+            System.out.println("There was an error or do not exist in that range");
+        }
+    }
+
+    public void findUniversitiesIN(List<Integer> idsIn){
+        List<University> listUniversities = repoUniversity.findByIdIn(idsIn);
+
+        if(!listUniversities.isEmpty()){
+            System.out.println("Displaying list of universities in the list");
+            for(University ptrU: listUniversities){
+                System.out.println(ptrU.getName() + " " + ptrU.getId());
+            }
+        }else{
+            System.out.println("There were no universities in the list");
+        }
+    }
 }

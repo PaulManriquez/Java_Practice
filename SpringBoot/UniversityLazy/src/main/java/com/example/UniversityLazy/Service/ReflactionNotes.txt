@@ -1,0 +1,33 @@
+// Reflection in Spring Data JPA allows method names like `findByName` to map automatically
+// to queries by inspecting entity fields at runtime.
+
+// How Spring uses reflection with query methods:
+// 1. **Method Name Inspection**: Spring analyzes the method name (`findByName`) to determine the query intent.
+//    - `findBy` means "find records" (generates SELECT query).
+//    - `Name` corresponds to the field `name` in the entity.
+// 2. **Field Matching**: Reflection ensures that a field `name` exists in the entity (case-sensitive).
+// 3. **Query Generation**: If a matching field is found, Spring generates a query like:
+//    `SELECT s FROM Student s WHERE s.name = :name`
+
+// Why `findByname()` won't work:
+// - Field names are case-sensitive in Java.
+// - `findByName` matches the field `private String name;`, but `findByname` fails because `name` (lowercase 'n') doesn't match `Name` (uppercase 'N').
+
+// Correct usage:
+// - Use exact case matching between method names and field names (e.g., `findByName` matches `name` field).
+// - JavaBean conventions require camelCase for field names.
+
+// Example of Reflection working correctly:
+// Scenario 1: Correct case
+// @Entity public class Student { private String name; }
+// public interface RepositoryStudent extends JpaRepository<Student, Integer> {
+//    List<Student> findByName(String name); // Works fine with the field "name"
+
+// Example of Reflection failing due to case sensitivity:
+// Scenario 2: Incorrect case
+// @Entity public class Student { private String Name; }
+// public interface RepositoryStudent extends JpaRepository<Student, Integer> {
+//    List<Student> findByName(String name); // Fails, "Name" doesn't match "name"
+
+// **Conclusion**:
+// - **Reflection** in Spring allows automatic query generation based on method names but requires **case-sensitive matching**

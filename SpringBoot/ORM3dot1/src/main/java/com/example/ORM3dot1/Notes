@@ -1,0 +1,25 @@
+=== TABLES
+Notes:
+1.- Identify who is your dominant entity, who is who can hold
+    other entities, based on this,
+    a university can hold MANY STUDENTS
+    , So in university,
+    you do not need a foreign key pointing  to Student table
+
+    ONE side (NO FOREIGN KEY)
+    N   side (FOREIGN KEY)
+
+CREATE TABLE university (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+-- Table for Student
+CREATE TABLE student (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    university_id BIGINT,
+    CONSTRAINT fk_student_university FOREIGN KEY (university_id)
+        REFERENCES university(id)
+        ON DELETE CASCADE
+);

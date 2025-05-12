@@ -35,14 +35,28 @@ public class UniversityLazyApplication implements CommandLineRunner {
 		System.out.println("===== RUNNING =====");
 
 		//Insert a university
-		//insertUniversity("Uni1");
+//		universityService.insertUniversity("Uni3");
+//		universityService.insertUniversity("Uni4");
+//		universityService.insertUniversity("Uni5");
+//		universityService.insertUniversity("Uni6");
+//		universityService.insertUniversity("Uni7");
+
+		//universityService.findUniversitiesBetweenIDs(-1,-1);
+
 
 		//Insert a student with a university
-		studentService.insertStudent("Paul3",1);
+		//studentService.insertStudent("Paul2",2);
 
 		//Get all students by university id
 		//getAllStudentsByUniversity(1);
-		universityService.getAllStudentsByUniversity(1);
+		//universityService.getAllStudentsByUniversity(1);
+		//studentService.displayAllStudentsWhosNameIs("Perroloco");
+
+//		studentService.getStudentNameAndUniversityCoincidences("Paul1",1);
+//		studentService.getStudentNameAndUniversityCoincidences("Paul2",2);
+
+		//Try to display a list of universities available in a list
+		universityService.findUniversitiesIN(List.of(-1, -70, 9));
 	}
 
 }
