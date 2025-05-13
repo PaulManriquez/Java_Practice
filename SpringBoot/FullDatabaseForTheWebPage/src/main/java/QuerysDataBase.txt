@@ -24,3 +24,23 @@ CREATE TABLE vacantes (
 
 --SELECT * FROM vacantes\G
 
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    estatus INT NOT NULL,
+    fechaRegistro DATETIME NOT NULL
+);
+
+CREATE TABLE solicitudes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATETIME NOT NULL,
+    archivo VARCHAR(255),
+    comentarios TEXT,
+    vacante_id INT,
+    usuario_id INT,
+    FOREIGN KEY (vacante_id) REFERENCES vacantes(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);

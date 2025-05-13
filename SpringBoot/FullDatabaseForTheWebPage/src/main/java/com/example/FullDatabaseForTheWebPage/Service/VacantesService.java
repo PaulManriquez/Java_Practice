@@ -75,6 +75,7 @@ public class VacantesService {
 
             Vacantes vac = createVacant(nombre, description, fecha, salario, destacado, imagen, estatus, detalles);
             vac.setCategoria(cat);
+            cat.getVacantes().add(vac);
 
             repositoryVacants.save(vac); // Only saving the owning side is needed
 
