@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,6 +45,20 @@ public class SolicitudesService {
             System.out.println("A new solicitud has been submited");
         }else{
             System.out.println("The vacante or usuario Id, do not exist");
+        }
+    }
+
+    @Transactional
+    public void displayAllSolicitudes(){
+        List<Solicitudes> solicitudes = repositorySolicitudes.findAll();
+        if(!solicitudes.isEmpty()){
+            for(Solicitudes ptrS:solicitudes){
+                System.out.println("Solicitud:"+ptrS.getId()
+                + " Vacante:" + ptrS.getVacante().getNombre()
+                + " Usuario:"+ ptrS.getUsuario().getNombre());
+            }
+        }else{
+            System.out.println("There are no data in solicitudes");
         }
     }
 

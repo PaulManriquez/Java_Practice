@@ -1,9 +1,6 @@
 package com.example.FullDatabaseForTheWebPage;
 
-import com.example.FullDatabaseForTheWebPage.Service.CategoriasService;
-import com.example.FullDatabaseForTheWebPage.Service.SolicitudesService;
-import com.example.FullDatabaseForTheWebPage.Service.UsuariosService;
-import com.example.FullDatabaseForTheWebPage.Service.VacantesService;
+import com.example.FullDatabaseForTheWebPage.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,6 +23,9 @@ public class FullDatabaseForTheWebPageApplication implements CommandLineRunner {
 	@Autowired
 	SolicitudesService solicitudesService;
 
+	@Autowired
+	PerfilesService perfilesService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(FullDatabaseForTheWebPageApplication.class, args);
 	}
@@ -43,10 +43,13 @@ public class FullDatabaseForTheWebPageApplication implements CommandLineRunner {
 //				"Descripcion de vacante",new Date(),
 //				12.02,1,"no-image.png",
 //				"1","Some details",1);
-
+//
 //		usuariosService.addUsuario("User name","@mail",
 //				"dogCrazy","password",1,new Date());
 
-		solicitudesService.addSolicitud(new Date(),"ArchivoString","Some coments",1,1);
+//		solicitudesService.addSolicitud(new Date(),"ArchivoString","Some coments",1,1);
+//		solicitudesService.displayAllSolicitudes();
+
+		perfilesService.addPerfil("A new perfil");
 	}
 }
