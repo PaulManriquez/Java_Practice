@@ -26,6 +26,9 @@ public class FullDatabaseForTheWebPageApplication implements CommandLineRunner {
 	@Autowired
 	PerfilesService perfilesService;
 
+	@Autowired
+	UsuarioPerfilService usuarioPerfilService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(FullDatabaseForTheWebPageApplication.class, args);
 	}
@@ -50,6 +53,9 @@ public class FullDatabaseForTheWebPageApplication implements CommandLineRunner {
 //		solicitudesService.addSolicitud(new Date(),"ArchivoString","Some coments",1,1);
 //		solicitudesService.displayAllSolicitudes();
 
-		perfilesService.addPerfil("A new perfil");
+		//perfilesService.addPerfil("A new perfil");
+
+		usuarioPerfilService.addUsuarioPerfilFunc();
+
 	}
 }
