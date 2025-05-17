@@ -1,5 +1,7 @@
 package net.itinajero.jobOffers.controller;
 
+import net.itinajero.jobOffers.Model.Categorias;
+import net.itinajero.jobOffers.Repository.RepositoryCategorias;
 import net.itinajero.jobOffers.Service.ICategoriasService;
 import net.itinajero.jobOffers.model.Categoria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +21,18 @@ public class categoryController {
     @Autowired
     private ICategoriasService  categoriesService;
 
+    @Autowired
+    private RepositoryCategorias repositoryCategorias;
+
     @GetMapping("/index")
     public String displayIndex(Model model){
         List<Categoria> categoriasLista = categoriesService.buscarTodas();
         System.out.println(categoriasLista);
         model.addAttribute("ListaCategorias",categoriasLista);
+
+
+//        List<Categorias> categoriasList = repositoryCategorias.findAll();
+//        model.addAttribute("ListaCategorias",categoriasList);
         return "categories/listCategorias";
     }
 
@@ -51,34 +60,5 @@ public class categoryController {
 
         return "redirect:/categories/index";
     }
-
-
-//    //@PostMapping("/save")
-//    @RequestMapping(value = "/save",method=RequestMethod.POST)
-//    public String saveCategoryController(
-//            @RequestParam("Name") String name,
-//            @RequestParam("Description") String description,
-//            RedirectAttributes attributes,
-//            BindingResult result,
-//            Model model){
-//
-////        if (result.hasErrors()){
-////            System.out.println("An error has happenned in SaveCategoryController");
-////            return "categories/formCategory";
-////        }
-//
-//        //Create the new category
-//        Categoria newCategoria = new Categoria();
-//        newCategoria.setId( newCategoria.currentId + 1 );
-//        newCategoria.setNombre(name);
-//        newCategoria.setDescripcion(description);
-//        System.out.println(newCategoria.toString());
-//
-//        //Save the new category created
-//        categoriesService.guardar(newCategoria);
-//        attributes.addFlashAttribute("msg", "New Register Saved");
-////        return "categories/listsCategories";
-//        return "redirect:/categories/index";
-//    }
 
 }
