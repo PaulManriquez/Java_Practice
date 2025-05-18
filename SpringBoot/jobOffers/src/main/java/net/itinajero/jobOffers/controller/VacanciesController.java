@@ -2,10 +2,13 @@ package net.itinajero.jobOffers.controller;
 
 import java.io.File;
 
+import jakarta.transaction.Transactional;
+import net.itinajero.jobOffers.Repository.RepositoryCategorias;
 import net.itinajero.jobOffers.Repository.RepositoryVacants;
 import net.itinajero.jobOffers.Service.ICategoriasService;
 import net.itinajero.jobOffers.Service.IVacantsService;
 import net.itinajero.jobOffers.model.Categoria;
+import net.itinajero.jobOffers.model.Categorias;
 import net.itinajero.jobOffers.model.Vacancy;
 import net.itinajero.jobOffers.model.Vacantes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,7 @@ import util.Utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/vacancies")
@@ -39,6 +43,9 @@ public class VacanciesController {
     @Autowired
     private RepositoryVacants repositoryVacants;
 
+    @Autowired
+    private RepositoryCategorias repositoryCategorias;
+
     //====
     @GetMapping("/delete")//?id=3
     public String deleteVacant(
@@ -49,27 +56,27 @@ public class VacanciesController {
         return "vacants/deleteVacantMessage";
     }
 
-    @GetMapping("/view/{id}")
-    public String seeDetails(
-            @PathVariable("id") int idVacant ,
-            Model model){
-
-        Vacancy vacancy = serviceVacancies.searchByID(idVacant);
-
-        System.out.println("id_Vacant" + idVacant);
-//        model.addAttribute("idVacant",idVacant);
-        model.addAttribute("idVacant",vacancy);
-        return "vacants/details";
-    }
+//    @GetMapping("/view/{id}")
+//    public String seeDetails(
+//            @PathVariable("id") int idVacant ,
+//            Model model){
+//
+//        Vacancy vacancy = serviceVacancies.searchByID(idVacant);
+//
+//        System.out.println("id_Vacant" + idVacant);
+////        model.addAttribute("idVacant",idVacant);
+//        model.addAttribute("idVacant",vacancy);
+//        return "vacants/details";
+//    }
 
     @GetMapping("/createFormVacant")
-    public String create(Vacancy vacancy,
+    public String create(Vacantes vacancy,
                          Model model){
 
-        // to the vacancy we add a new category by an category object
-        List<Categoria> categoryList = serviceCategories.buscarTodas();
-        model.addAttribute("listCategories",categoryList);
-        System.out.println(categoryList);
+        List<Categorias> listCategories = repositoryCategorias.findAll();
+        model.addAttribute("listCategories",listCategories);
+        model.addAttribute("vacancy",vacancy);
+
         return "vacants/formVacante";
     }
 
@@ -78,8 +85,9 @@ public class VacanciesController {
     //application.properties: spring.servlet.multipart.location=${java.io.tmpdir}/myapp-uploads
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @Transactional
     public String saveCreateVacant(
-            Vacancy vacant,
+            Vacantes vacant,// Objects properties automatically linked/saved
             BindingResult result,
             Model model,
             RedirectAttributes attributes,
@@ -96,19 +104,24 @@ public class VacanciesController {
         if (!multiPart.isEmpty()) {
             String imageName = Utils.saveFile(multiPart, uploadDir + File.separator);
             if (imageName != null) {
-                vacant.setImage(imageName);
+                vacant.setImagen(imageName);
             }
         }
 
         // Link category
         Integer categoriaId = vacant.getCategoria().getId();
-        Categoria fullCategoria = serviceCategories.buscarPorId(categoriaId);
-        vacant.setCategoria(fullCategoria);
+        System.out.println("====>"+categoriaId);
+        Optional fullCategoria = repositoryCategorias.findById(categoriaId);
 
-        // Save vacancy
-        serviceVacancies.save(vacant);
-        System.out.println(vacant.toString());
-        System.out.println(vacant.getCategoria().toString());
+        if(fullCategoria.isPresent()){
+            Categorias categoria = (Categorias) fullCategoria.get();
+            vacant.setCategoria(categoria);
+        }
+
+
+        // Save vacant
+        repositoryVacants.save(vacant);
+
 
         // Flash message and redirect
         attributes.addFlashAttribute("msg", "New Category Saved");

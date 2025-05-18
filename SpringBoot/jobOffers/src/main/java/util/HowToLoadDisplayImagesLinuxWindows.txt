@@ -1,0 +1,90 @@
+1.- i add WebConfig class
+2.- Set in the properties as follows:
+    # Directory to store uploaded files (cross-platform compatible)
+    spring.servlet.multipart.location=${java.io.tmpdir}/myapp-uploads
+
+    # Spring configuration to serve static files from the "static" directory within resources
+    spring.resources.static-locations=classpath:/static/
+3.- Put this in the home.html:
+    <img class="rounded mx-auto d-block"
+    th:src="@{/uploads/{image}(image=${ptrVacant.imagen})}"
+    alt="Generic placeholder image" width="220" height="220">
+
+4.- As follows in the endpoint homecontroller:
+
+@GetMapping("/")
+    public String displayHome(Model model){
+        List<Vacantes> listVacancies = repositoryVacants.findAll();
+
+        // Log the image path to see if it matches what you expect
+        for (Vacantes ptrV : listVacancies) {
+            String imagePath = "/uploads/" + ptrV.getImagen(); // This matches the URL path you will use
+            System.out.println("Image URL path for image " + ptrV.getImagen() + ": " + imagePath);
+        }
+
+        model.addAttribute("vacantsList", listVacancies);
+
+        return "home";
+    }
+
+Steps to Serve Uploaded Images in Spring Boot:
+Set Up the Upload Directory:
+
+In application.properties, set the directory for storing uploaded files:
+
+properties
+Copiar
+Editar
+spring.servlet.multipart.location=${java.io.tmpdir}/myapp-uploads
+Configure Static Resources:
+
+In application.properties, configure Spring to serve static files from the uploads directory:
+
+properties
+Copiar
+Editar
+spring.resources.static-locations=file://${java.io.tmpdir}/myapp-uploads/
+Create WebConfig Class:
+
+You need a WebConfig class to register the ResourceHandler for serving static files. Here's the class:
+
+java
+Copiar
+Editar
+package com.yourpackage.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Serve files from "myapp-uploads" directory in temp directory
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file://" + System.getProperty("java.io.tmpdir") + "/myapp-uploads/");
+    }
+}
+Controller:
+
+In the controller, use the Model to add a list of vacancies to the view and log the image paths:
+
+java
+Copiar
+Editar
+@GetMapping("/")
+public String displayHome(Model model) {
+    List<Vacantes> listVacancies = repositoryVacants.findAll();
+
+    // Log the image path to see if it matches what you expect
+    for (Vacantes ptrV : listVacancies) {
+        System.out.println("Image path for image " + ptrV.getImagen() + ": " +
+                System.getProperty("java.io.tmpdir") + "myapp-uploads" + ptrV.getImagen());
+    }
+
+    model.addAttribute("vacantsList", listVacancies);
+    return "home";
+}

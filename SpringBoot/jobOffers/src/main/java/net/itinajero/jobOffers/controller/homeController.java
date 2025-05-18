@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,7 +30,14 @@ public class homeController {
     @GetMapping("/")
     public String displayHome(Model model){
         List<Vacantes> listVacancies = repositoryVacants.findAll();
-        model.addAttribute("vacantsList",listVacancies);
+
+        // Log the image path to see if it matches what you expect
+        for (Vacantes ptrV : listVacancies) {
+            String imagePath = "/uploads/" + ptrV.getImagen(); // This matches the URL path you will use
+            System.out.println("Image URL path for image " + ptrV.getImagen() + ": " + imagePath);
+        }
+
+        model.addAttribute("vacantsList", listVacancies);
 
         return "home";
     }

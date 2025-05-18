@@ -49,8 +49,18 @@
                   <td th:text="${ptrCategoria.getNombre}"></td>
                   <td th:text="${ptrCategoria.getDescripcion}"></td>
                   <td>
-                    <a href="#" class="btn btn-success btn-sm" role="button" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-success btn-sm confirmar" role="button" title="Eliminar"><i class="fas fa-trash" aria-hidden="true"></i></a>
+<!--                    <a href="#" class="btn btn-success btn-sm" role="button" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>-->
+<!--                    <a href="#" class="btn btn-success btn-sm confirmar" role="button" title="Eliminar"><i class="fas fa-trash" aria-hidden="true"></i></a>-->
+                    <!-- Edit Button with Pencil Icon -->
+                    <a href="#" class="btn btn-success btn-sm" role="button" title="Editar">
+                      <i class="fas fa-pencil-alt" aria-hidden="true"></i> Actualizar
+                    </a>
+
+                    <!-- Delete Button with Trash Icon -->
+                    <a href="#" class="btn btn-danger btn-sm confirmar" role="button" title="Eliminar">
+                      <i class="fas fa-trash" aria-hidden="true"></i> Eliminar
+                    </a>
+
                   </td>
                 </tr>
 

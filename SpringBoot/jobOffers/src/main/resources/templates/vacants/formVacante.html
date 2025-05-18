@@ -19,9 +19,11 @@
 
   <body>
 
-  <header th:insert="fragments/menu :: main-menu"></header>
+<!--  <header th:insert="fragments/menu :: main-menu"></header>-->
+<header th:insert="~{fragments/menu :: main-menu}"></header>
 
-    <main role="main">     
+
+<main role="main">
       <hr>
       <div class="container"> 
 
@@ -42,7 +44,7 @@
                 <div class="col-md-3"> 
                   <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" th:field="*{name}" class="form-control" id="nombre" name="name" placeholder="Titulo de la oferta de trabajo" required="required">
+                    <input type="text" th:field="*{nombre}" class="form-control" id="nombre" name="nombre" placeholder="Titulo de la oferta de trabajo" required="required">
                   </div>
                 </div>
                 <div class="col-md-9"> 
@@ -69,8 +71,8 @@
                     is sending to VacanciesController/save with the corresponding categoria.id for the Vacancy-->
                     <select class="form-control" th:field="*{categoria.id}" >
                       <option   th:each="ptrCategory : ${listCategories}"
-                                th:value="${ptrCategory.id}"
-                                th:text="${ptrCategory.nombre}">
+                                th:value="${ptrCategory.getId}"
+                                th:text="${ptrCategory.getNombre}">
                       </option>
                     </select>
 
@@ -91,17 +93,17 @@
                 <div class="col-md-3"> 
                   <div class="form-group">
                     <label for="fecha">Fecha de Publicación</label>
-                    <input type="text" class="form-control" th:field="*{date}" name="date" id="fecha" placeholder="Fecha de publicacion" required="required">
+                    <input type="text" class="form-control" th:field="*{fecha}" name="fecha" id="fecha" placeholder="Fecha de publicacion" required="required">
                   </div>  
                 </div>
                 <div class="col-md-3"> 
                   <div class="form-check">
                     <label class="form-check-label" for="destacado0"></label><br>
-                    <input class="form-check-input" type="radio" name="excels" id="destacado" value="1" checked="checked">
+                    <input class="form-check-input" type="radio" name="destacado" id="destacado" value="1" checked="checked">
                     <label class="form-check-label" for="destacado1">Destacado</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" th:field="*{excels}" name="excels" id="destacado" value="0">
+                    <input class="form-check-input" type="radio" th:field="*{destacado}" name="destacado" id="destacado" value="0">
                     <label class="form-check-label" for="destacado2">No Destacado</label>
                   </div>
                 </div>
@@ -110,7 +112,7 @@
                 <div class="col-md-3"> 
                   <div class="form-group">
                     <label for="salario">Salario Ofrecido (Aprox)</label>
-                    <input type="text" class="form-control" th:field="*{salary}" name="salary" id="salario" placeholder="Salario aproximado." required="required">
+                    <input type="text" class="form-control" th:field="*{salario}" name="salario" id="salario" placeholder="Salario aproximado." required="required">
                   </div>
                 </div>
                 <div class="col-md-3"> 
@@ -125,7 +127,7 @@
                 <div class="col-md-9"> 
                   <div class="form-group">
                     <label for="detalles"><strong>Detalles</strong></label>          
-                    <textarea class="form-control" th:field="*{details}" name="details" id="detalles" rows="7"></textarea>
+                    <textarea class="form-control" th:field="*{detalles}" name="detalles" id="detalles" rows="7"></textarea>
                   </div> 
                 </div> 
                 <div class="col-md-3">
