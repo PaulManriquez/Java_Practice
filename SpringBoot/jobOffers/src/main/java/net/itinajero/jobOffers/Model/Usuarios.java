@@ -1,4 +1,4 @@
-package net.itinajero.jobOffers.Model;
+package net.itinajero.jobOffers.model;
 
 import jakarta.persistence.*;
 

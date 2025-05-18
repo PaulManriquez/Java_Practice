@@ -53,9 +53,9 @@ public class FullDatabaseForTheWebPageApplication implements CommandLineRunner {
 //		solicitudesService.addSolicitud(new Date(),"ArchivoString","Some coments",1,1);
 //		solicitudesService.displayAllSolicitudes();
 
-		//perfilesService.addPerfil("A new perfil");
+//		perfilesService.addPerfil("A new perfil");
 
-		usuarioPerfilService.addUsuarioPerfilFunc();
+//		usuarioPerfilService.addUsuarioPerfilFunc();
 
 	}
 }

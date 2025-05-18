@@ -1,7 +1,7 @@
 package net.itinajero.jobOffers.Servicee;
 
 
-import net.itinajero.jobOffers.Model.Perfiles;
+import net.itinajero.jobOffers.model.Perfiles;
 import net.itinajero.jobOffers.Repository.RepositoryPerfil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

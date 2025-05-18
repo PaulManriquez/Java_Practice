@@ -1,11 +1,13 @@
 package net.itinajero.jobOffers.Servicee;
 
-import com.example.FullDatabaseForTheWebPage.Model.Solicitudes;
-import com.example.FullDatabaseForTheWebPage.Model.Usuarios;
-import com.example.FullDatabaseForTheWebPage.Model.Vacantes;
-import com.example.FullDatabaseForTheWebPage.Repository.RepositorySolicitudes;
-import com.example.FullDatabaseForTheWebPage.Repository.RepositoryUsuarios;
-import com.example.FullDatabaseForTheWebPage.Repository.RepositoryVacants;
+
+import net.itinajero.jobOffers.model.Solicitudes;
+import net.itinajero.jobOffers.model.Usuarios;
+import net.itinajero.jobOffers.model.Vacantes;
+import net.itinajero.jobOffers.Repository.RepositorySolicitudes;
+import net.itinajero.jobOffers.Repository.RepositoryUsuarios;
+import net.itinajero.jobOffers.Repository.RepositoryVacants;
+
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,9 @@
-package net.itinajero.jobOffers.Model;
+package net.itinajero.jobOffers.model;
 
 import jakarta.persistence.*;
 
 import java.util.List;
+import net.itinajero.jobOffers.model.Vacantes;
 
 @Entity
 @Table(name = "categorias")

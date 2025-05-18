@@ -51,11 +51,11 @@
 
                 <tr th:each="ptrVacant: ${vacantsList}">
 
-                  <td th:text="${ptrVacant.CategoriaNombre}"></td>
-                  <td th:text="${ptrVacant.Name}"></td>
-                  <td th:text="${ptrVacant.date}"></td>
-                  <td th:text="${ptrVacant.estatus}"></td>
-                  <td th:text="${ptrVacant.excels == 1 ? 'Si' : 'No'}"></td>
+                  <td th:text="${ptrVacant.getCategoria.getNombre}"></td>
+                  <td th:text="${ptrVacant.getNombre}"></td>
+                  <td th:text="${ptrVacant.getFecha}"></td>
+                  <td th:text="${ptrVacant.getEstatus}"></td>
+                  <td th:text="${ptrVacant.getDestacado == 1 ? 'Si' : 'No'}"></td>
                   <!--                  <td th:text="${ptrVacant.getCategoriaNombre}"></td>-->
 
 <!--                  <td th:text="${ptrVacant.getNombre}"></td>-->

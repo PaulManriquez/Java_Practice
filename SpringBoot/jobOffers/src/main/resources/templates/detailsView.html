@@ -50,16 +50,16 @@
         <div class="row">
             <div class="col-md-3">
                 <img class="rounded mx-auto d-block"
-                     th:src="@{/images/{img} (img=${VacantObj.getImage})}"
+                     th:src="@{/images/{img} (img=${VacantObj.getImagen})}"
                      alt="Generic placeholder image" width="220" height="220">
             </div>
             <div class="col-md-9">
                 <div class="card">
-                    <h4 class="card-header">Aplicar para <strong th:text="${VacantObj.getName}"></strong></h4>
+                    <h4 class="card-header">Aplicar para <strong th:text="${VacantObj.getNombre}"></strong></h4>
                     <div class="card-body">
                         <h5 class="card-title"><strong>Categoría: </strong> <span>Nombre la categoría</span></h5>
-                        <h6 class="card-title"><strong>Publicado: </strong> <span th:text="${VacantObj.getDate}"></span></h6>
-                        <h6 class="card-title"><strong>Salario Ofrecido: </strong><span th:text = "${VacantObj.getSalary}">$9000</span></h6>
+                        <h6 class="card-title"><strong>Publicado: </strong> <span th:text="${VacantObj.getFecha}"></span></h6>
+                        <h6 class="card-title"><strong>Salario Ofrecido: </strong><span th:text = "${VacantObj.getSalario}">$9000</span></h6>
                         <p class="card-text" th:text="${VacantObj.getDescription}"></p>
 
                         <div class="card bg-light mb-3" >

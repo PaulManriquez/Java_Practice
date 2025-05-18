@@ -29,29 +29,29 @@
             <img th:src="@{/images/jobIcon.png}" width="60" height="60">
             -->
             <td>
-                <img th:src = "@{/images/{ptrImg} ( ptrImg = ${ptrVacancy.image}) }" width="60" height="60">
+                <img th:src = "@{/images/{ptrImg} ( ptrImg = ${ptrVacancy.getImagen}) }" width="60" height="60">
             </td>
-            <td th:text="${ptrVacancy.id}"></td>
-            <td th:text="${ptrVacancy.name}"></td>
-            <td th:text="${ptrVacancy.date}"></td>
-            <td th:text="${ptrVacancy.salary}"></td>
-            <td th:text="${ptrVacancy.description}"></td>
+            <td th:text="${ptrVacancy.getId}"></td>
+            <td th:text="${ptrVacancy.getNombre}"></td>
+            <td th:text="${ptrVacancy.getFecha}"></td>
+            <td th:text="${ptrVacancy.getSalario}"></td>
+            <td th:text="${ptrVacancy.getDescription}"></td>
             <!--
             <td th:text="${ptrVacancy.excels}"></td>
             <td th:text="${ptrVacancy.excels == 1 ? 'Si' : 'No'}"></td>
             -->
             <td>
-                <span th:if="${ptrVacancy.excels==1}" class="badge text-bg-success">YES</span>
-                <span th:unless="${ptrVacancy.excels==1}" class="badge text-bg-danger">NO</span>
+                <span th:if="${ptrVacancy.getDestacado==1}" class="badge text-bg-success">YES</span>
+                <span th:unless="${ptrVacancy.getDestacado==1}" class="badge text-bg-danger">NO</span>
             </td>
 
             <td>
                 <!--VacanciesController.java | seeDetails -->
-                <a th:href="@{/vacancies/view/{id} (id=${ptrVacancy.id}) }" class="btn btn-success"> See details</a>
+                <a th:href="@{/vacancies/view/{id} (id=${ptrVacancy.getId}) }" class="btn btn-success"> See details</a>
             </td>
 
             <td>
-                <a th:href="@{/vacancies/delete(id=${ptrVacancy.id}) }" class="btn btn-danger"> Delete</a>
+                <a th:href="@{/vacancies/delete(id=${ptrVacancy.getId}) }" class="btn btn-danger"> Delete</a>
             </td>
         </tr>
 

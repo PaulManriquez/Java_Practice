@@ -1,8 +1,9 @@
-package net.itinajero.jobOffers.Model;
+package net.itinajero.jobOffers.model;
 
 import jakarta.persistence.*;
-
+import net.itinajero.jobOffers.model.Vacantes;
 import java.util.Date;
+import net.itinajero.jobOffers.model.Usuarios;
 
 @Entity
 @Table(name = "solicitudes")

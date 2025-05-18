@@ -1,8 +1,7 @@
 package net.itinajero.jobOffers.Servicee;
 
 
-import net.itinajero.jobOffers.Model.Categorias;
-import net.itinajero.jobOffers.Model.Vacantes;
+import net.itinajero.jobOffers.model.*;
 import net.itinajero.jobOffers.Repository.RepositoryCategorias;
 import net.itinajero.jobOffers.Repository.RepositoryVacants;
 

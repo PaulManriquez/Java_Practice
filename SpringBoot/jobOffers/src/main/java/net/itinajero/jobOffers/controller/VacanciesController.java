@@ -2,10 +2,12 @@ package net.itinajero.jobOffers.controller;
 
 import java.io.File;
 
+import net.itinajero.jobOffers.Repository.RepositoryVacants;
 import net.itinajero.jobOffers.Service.ICategoriasService;
 import net.itinajero.jobOffers.Service.IVacantsService;
 import net.itinajero.jobOffers.model.Categoria;
 import net.itinajero.jobOffers.model.Vacancy;
+import net.itinajero.jobOffers.model.Vacantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomBooleanEditor;
@@ -33,6 +35,9 @@ public class VacanciesController {
 
     @Autowired
     private ICategoriasService serviceCategories;
+
+    @Autowired
+    private RepositoryVacants repositoryVacants;
 
     //====
     @GetMapping("/delete")//?id=3
@@ -119,27 +124,13 @@ public class VacanciesController {
 
     @GetMapping("/index")
     public String displayIndex(Model model){
-        List<Vacancy> myListOfVacants = serviceVacancies.searchAllVacants();
-        for(Vacancy ptr : myListOfVacants){
-            System.out.println(ptr.getName());
-        }
-        model.addAttribute("vacantsList",myListOfVacants);
+
+        List<Vacantes> listVacantes = repositoryVacants.findAll();
+        model.addAttribute("vacantsList",listVacantes);
 
         return "vacants/listVacantes";
     }
 
-//    @PostMapping("/saveCV")
-//    @RequestMapping(value = "/save",method=RequestMethod.POST)
-//    public String saveCreateVacant(
-//            @RequestParam("Name") String NameF, @RequestParam("Description") String DescriptionF,
-//            @RequestParam("Estatus") String EstatusF, @RequestParam("Date") String DateF,
-//            @RequestParam("Excelled") int ExcelledF, @RequestParam("Salary") double Salary,
-//            @RequestParam("Details") String Details
-//
-//    ){
-//        System.out.println(NameF + " " + EstatusF + " " + DescriptionF +
-//                " " + DateF + " " + ExcelledF + " " + Salary + " " + Details);
-//        return "vacants/ListOfVacants";
-//    }
+
 }
 

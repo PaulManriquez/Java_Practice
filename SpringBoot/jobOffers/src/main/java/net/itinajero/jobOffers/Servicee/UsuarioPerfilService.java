@@ -1,9 +1,8 @@
 package net.itinajero.jobOffers.Servicee;
 
 
-import net.itinajero.jobOffers.Model.Perfiles;
-import net.itinajero.jobOffers.Model.UsuarioPerfil;
-import net.itinajero.jobOffers.Model.Usuarios;
+import net.itinajero.jobOffers.model.*;
+
 import net.itinajero.jobOffers.Repository.RepositoryPerfil;
 import net.itinajero.jobOffers.Repository.RepositoryUsuarios;
 import net.itinajero.jobOffers.Repository.RepositoryUsuariosPerfil;
