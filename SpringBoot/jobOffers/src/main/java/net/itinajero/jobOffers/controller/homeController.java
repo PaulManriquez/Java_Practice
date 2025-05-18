@@ -1,6 +1,7 @@
 package net.itinajero.jobOffers.controller;
 import net.itinajero.jobOffers.Repository.RepositoryVacants;
 import net.itinajero.jobOffers.Service.IVacantsService;
+import net.itinajero.jobOffers.Servicee.VacantesService;
 import net.itinajero.jobOffers.model.Vacancy;
 import net.itinajero.jobOffers.model.Vacantes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,14 @@ public class homeController {
     @Autowired
     private RepositoryVacants repositoryVacants;
 
+    @Autowired
+    private VacantesService vacantesService;
+
     //=======================================
     @GetMapping("/")
     public String displayHome(Model model){
-        List<Vacantes> listVacancies = repositoryVacants.findAll();
+//        List<Vacantes> listVacancies = repositoryVacants.findAll();
+        List<Vacantes> listVacancies = vacantesService.getDestacadosAprobados();
 
         // Log the image path to see if it matches what you expect
         for (Vacantes ptrV : listVacancies) {

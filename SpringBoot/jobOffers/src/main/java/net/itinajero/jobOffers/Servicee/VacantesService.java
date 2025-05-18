@@ -72,6 +72,9 @@ public class VacantesService {
         return vacante;
     }
 
-
+    public  List<Vacantes> getDestacadosAprobados(){
+        List<Vacantes> destacadosAprobados = repositoryVacants.findDestacadosAprobados();
+        return destacadosAprobados;
+    }
 
 }

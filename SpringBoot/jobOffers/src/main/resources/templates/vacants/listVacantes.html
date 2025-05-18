@@ -63,8 +63,48 @@
 <!--                  <td th:text="${ptrVacant.getEstatus}"></td>-->
 <!--                  <td th:text="${ptrVacant.getExcels == 1 ? 'Si' : 'No' }"></td>-->
                   <td>
-                    <a href="#" class="btn btn-success btn-sm" role="button" title="Editar el registro."><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-success btn-sm confirmar" role="button" title="Eliminar el registro."><i class="fas fa-trash" aria-hidden="true"></i></a>
+
+                    <a href="#" class="btn btn-success btn-sm" role="button" title="Editar">
+                      <i class="fas fa-pencil-alt" aria-hidden="true"></i> Actualizar
+                    </a>
+
+                    <!-- Delete Button with Trash Icon -->
+                    <!-- Edit Button -->
+
+                    <!-- Delete Button with Trash Icon -->
+                    <!-- Delete Button with Trash Icon -->
+                    <a href="#" class="btn btn-danger btn-sm confirmar" role="button" title="Eliminar"
+                       data-toggle="modal" data-target="#deleteModal"
+                       data-id="${ptrVacant.id}"
+                       data-nombre="${ptrVacant.getNombre}">
+                      <i class="fas fa-trash" aria-hidden="true"></i> Eliminar
+                    </a>
+
+
+                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <!-- Modal Header -->
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <!-- Modal Body -->
+
+                          <div class="modal-body">
+                            ¿Estás seguro de que quieres eliminar la oferta de trabajo: <strong id="vacanteNombre" th:text="${ptrVacant.getNombre}"></strong>? Esta acción no se puede deshacer.
+                          </div>
+                          <!-- Modal Footer -->
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger" id="confirmDeleteButton">Eliminar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                   </td>
                 </tr>
 
