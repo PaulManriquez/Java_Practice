@@ -1,7 +1,12 @@
 package net.itinajero.jobOffers.controller;
+import net.itinajero.jobOffers.Repository.RepositoryPerfil;
+import net.itinajero.jobOffers.Repository.RepositoryUsuarios;
+import net.itinajero.jobOffers.Repository.RepositoryUsuariosPerfil;
 import net.itinajero.jobOffers.Repository.RepositoryVacants;
 import net.itinajero.jobOffers.Service.IVacantsService;
+import net.itinajero.jobOffers.Servicee.UsuariosService;
 import net.itinajero.jobOffers.Servicee.VacantesService;
+import net.itinajero.jobOffers.Model.UsuarioPerfil;
 import net.itinajero.jobOffers.model.Usuarios;
 import net.itinajero.jobOffers.model.Vacancy;
 import net.itinajero.jobOffers.model.Vacantes;
@@ -11,10 +16,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import net.itinajero.jobOffers.model.Perfiles;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,6 +40,18 @@ public class homeController {
 
     @Autowired
     private VacantesService vacantesService;
+
+    @Autowired
+    private RepositoryPerfil repositoryPerfil;
+
+    @Autowired
+    private RepositoryUsuariosPerfil repositoryUsuariosPerfil;
+
+    @Autowired
+    private RepositoryUsuarios repositoryUsuarios;
+
+    @Autowired
+    private UsuariosService usuariosService;
 
     //=======================================
     @GetMapping("/")
@@ -49,6 +70,7 @@ public class homeController {
         return "home";
     }
 
+    //Returns the form to register
     @GetMapping("/registrarse")
     public String registrarsePage(){
         return "formRegistro";
@@ -56,14 +78,55 @@ public class homeController {
 
     @PostMapping("/saveRegistro")
     public String saveRegister(
-            Usuarios usuario
+            Usuarios usuario,
+            RedirectAttributes attributes
     ){
 
-        System.out.println(
-                usuario.getNombre() + usuario.getEmail()  + usuario.getUsername() + usuario.getPassword() );
+
+        Optional optPerfil = repositoryPerfil.findById(1);
+        if(optPerfil.isPresent()){
+            Perfiles per = (Perfiles) optPerfil.get(); //Get the perfil concerning to this user
+
+            Date currentDate = (Date) getDateFormattedAsDate();//Formated Date
+            usuario.setFechaRegistro(currentDate);//Set Date to usuario
+            usuario.setEstatus(1);//Set estatus
+
+            UsuarioPerfil usp = new UsuarioPerfil();//new usuarioPerfil related
+            usp.setUsuario(usuario);//Set Usuario
+            usp.setPerfil(per);//Set perfil
 
 
-        return "formRegistro";
+            repositoryUsuarios.save(usuario);
+            repositoryUsuariosPerfil.save(usp);
+
+            attributes.addFlashAttribute("msg", "New User Saved");
+
+
+            return "redirect:/registrarse";
+        }
+        return "redirect:/registrarse"; //When redirects, redirects to an endpoint
+    }
+
+    public static Date getDateFormattedAsDate() {
+        try {
+            String dateString = "2025-05-14 09:23:06";  // Or getDateFormated()
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return formatter.parse(dateString);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+//        usuariosService.deleteUsuario(idUsuario);
+
+    @GetMapping("/mostrarUsuarios")
+    public String displayUsuarios(
+            Model model
+    ){
+        List<Usuarios> listUsuarios = repositoryUsuarios.findAll();
+        model.addAttribute("usuarioL",listUsuarios);
+        return "home/listUsuarios";
     }
 
     @GetMapping("/details/{id}")

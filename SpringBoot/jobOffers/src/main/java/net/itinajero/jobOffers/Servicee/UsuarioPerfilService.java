@@ -7,6 +7,9 @@ import net.itinajero.jobOffers.Repository.RepositoryPerfil;
 import net.itinajero.jobOffers.Repository.RepositoryUsuarios;
 import net.itinajero.jobOffers.Repository.RepositoryUsuariosPerfil;
 
+import net.itinajero.jobOffers.model.Perfiles;
+import net.itinajero.jobOffers.Model.UsuarioPerfil;
+import net.itinajero.jobOffers.model.Usuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

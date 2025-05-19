@@ -1,7 +1,8 @@
-package net.itinajero.jobOffers.model;
+package net.itinajero.jobOffers.Model;
 
 import jakarta.persistence.*;
 import net.itinajero.jobOffers.model.Usuarios;
+import net.itinajero.jobOffers.model.Perfiles;
 
 @Entity
 @Table(name = "usuario_perfil")

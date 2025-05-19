@@ -11,8 +11,12 @@ public interface RepositorySolicitudes extends JpaRepository<Solicitudes,Integer
 
     @Modifying
     @Transactional
+
     @Query("DELETE FROM Solicitudes s WHERE s.vacante.id = :idVacante")
     void deleteByVacanteId(@Param("idVacante") int idVacante);
 
-
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Solicitudes s WHERE s.usuario.id = :idUsuario")
+    void deleteSolicitudesOfThisIDUser(@Param("idUsuario") int idUsuario);
 }
