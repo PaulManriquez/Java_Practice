@@ -1,12 +1,14 @@
 package net.itinajero.jobOffers.Servicee;
 
 
+import net.itinajero.jobOffers.Repository.RepositorySolicitudes;
 import net.itinajero.jobOffers.model.*;
 import net.itinajero.jobOffers.Repository.RepositoryCategorias;
 import net.itinajero.jobOffers.Repository.RepositoryVacants;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -21,6 +23,9 @@ public class VacantesService {
 
     @Autowired
     RepositoryVacants repositoryVacants;
+
+    @Autowired
+    RepositorySolicitudes repositorySolicitudes;
 
 
 
@@ -75,6 +80,12 @@ public class VacantesService {
     public  List<Vacantes> getDestacadosAprobados(){
         List<Vacantes> destacadosAprobados = repositoryVacants.findDestacadosAprobados();
         return destacadosAprobados;
+    }
+
+    @Transactional
+    public void deleteVacante(int idVacant){
+        repositorySolicitudes.deleteByVacanteId(idVacant);
+        repositoryVacants.deleteById(idVacant);
     }
 
 }

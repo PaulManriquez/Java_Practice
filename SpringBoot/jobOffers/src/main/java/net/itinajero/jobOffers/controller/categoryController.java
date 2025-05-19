@@ -1,9 +1,11 @@
 package net.itinajero.jobOffers.controller;
 
+import net.itinajero.jobOffers.Repository.RepositoryVacants;
 import net.itinajero.jobOffers.model.Categorias;
 import net.itinajero.jobOffers.Repository.RepositoryCategorias;
 import net.itinajero.jobOffers.Service.ICategoriasService;
 import net.itinajero.jobOffers.model.Categoria;
+import net.itinajero.jobOffers.model.Vacantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value="/categories")
@@ -23,17 +26,50 @@ public class categoryController {
     @Autowired
     private RepositoryCategorias repositoryCategorias;
 
+    @Autowired
+    private RepositoryVacants repositoryVacants;
+
     @GetMapping("/index")
     public String displayIndex(Model model){
 //        List<Categoria> categoriasLista = categoriesService.buscarTodas();
 //        System.out.println(categoriasLista);
 //        model.addAttribute("ListaCategorias",categoriasLista);
 
-
         List<Categorias> categoriasList = repositoryCategorias.findAll();
         model.addAttribute("ListaCategorias",categoriasList);
         return "categories/listCategorias";
     }
+
+    @PostMapping("/delete")
+    public String deleteVacant(
+            @RequestParam("id") int idCategory,
+            RedirectAttributes redirectAttributes) {
+
+        Optional categoryToDelete = repositoryCategorias.findById(idCategory);
+        if(categoryToDelete.isPresent() && idCategory!= 1){//1 is the default category, it cant be deleted
+            //Get all the vacantes who category was idCategory
+            List<Vacantes> toUpdate = repositoryVacants.vacantesToUpdate(idCategory);
+            Optional defaultCategory = repositoryCategorias.findById(1);
+            if(defaultCategory.isPresent()){
+                Categorias cat = (Categorias) defaultCategory.get();
+                for(Vacantes ptrV:toUpdate){
+                    //Update each vacante to a default category
+                    ptrV.setCategoria(cat);
+                }
+                repositoryCategorias.deleteById(idCategory); // <-- The category has been deleted
+            }
+            // Add a success message to be shown after deletion
+            redirectAttributes.addFlashAttribute("msg", "Categoria eliminada con éxito.");
+        }else{
+            if(idCategory==1){
+                redirectAttributes.addFlashAttribute("msg", "No se puede eliminar la categoria por default 1");
+            }else{
+                redirectAttributes.addFlashAttribute("msg", "Error al eliminar la categoria");
+            }
+        }
+        return "redirect:/categories/index";
+    }
+
 
     //return the template
     @GetMapping("/create")

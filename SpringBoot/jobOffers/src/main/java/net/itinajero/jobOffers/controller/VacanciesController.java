@@ -7,6 +7,7 @@ import net.itinajero.jobOffers.Repository.RepositoryCategorias;
 import net.itinajero.jobOffers.Repository.RepositoryVacants;
 import net.itinajero.jobOffers.Service.ICategoriasService;
 import net.itinajero.jobOffers.Service.IVacantsService;
+import net.itinajero.jobOffers.Servicee.VacantesService;
 import net.itinajero.jobOffers.model.Categoria;
 import net.itinajero.jobOffers.model.Categorias;
 import net.itinajero.jobOffers.model.Vacancy;
@@ -46,15 +47,49 @@ public class VacanciesController {
     @Autowired
     private RepositoryCategorias repositoryCategorias;
 
-    //====
-    @GetMapping("/delete")//?id=3
+    @Autowired
+    private VacantesService vacantesService;
+
+
+    @PostMapping("/edit")
+    public String editVacante(
+            @RequestParam("id") int idVacante,
+            Model model
+    ){
+        System.out.println("======> ID("+idVacante + ")");
+
+
+        Optional optVac = repositoryVacants.findById(idVacante);
+        if(optVac.isPresent()){
+            Vacantes vacObj = (Vacantes) optVac.get();
+            model.addAttribute("vacancy",vacObj);
+            List<Categorias> listCategories = repositoryCategorias.findAll();
+            model.addAttribute("listCategories",listCategories);
+
+            return "vacants/formVacante";
+        }
+        return "redirect:/vacancies/index";
+    }
+
+    @PostMapping("/delete")
     public String deleteVacant(
             @RequestParam("id") int idVacant,
-            Model model){
-        System.out.println("Deleting the vacant: "+ idVacant);
-        model.addAttribute("idVacant",idVacant);
-        return "vacants/deleteVacantMessage";
+            RedirectAttributes redirectAttributes) {
+
+        Optional vacantToDelete = repositoryVacants.findById(idVacant);
+        if(vacantToDelete.isPresent()){
+            vacantesService.deleteVacante(idVacant);
+            // Add a success message to be shown after deletion
+            redirectAttributes.addFlashAttribute("msg", "Vacante eliminada con éxito.");
+        }else{
+            // Add a success message to be shown after deletion
+            redirectAttributes.addFlashAttribute("msg", "Error al eliminar la vacante");
+        }
+
+        // Redirect to the list of vacancies after deletion
+        return "redirect:/vacancies/index";
     }
+
 
 //    @GetMapping("/view/{id}")
 //    public String seeDetails(
@@ -84,6 +119,12 @@ public class VacanciesController {
     private String uploadDir;
     //application.properties: spring.servlet.multipart.location=${java.io.tmpdir}/myapp-uploads
 
+
+    //Note: if an id alredy exist/ispassed to the model
+    //This will be updated, and will not create another insert/object in the data base
+    //Tip to do: mark as a hidden the data you want to conserve
+    //<input type="hidden" th:field="*{id}">
+    //<input type="hidden" th:field="*{imagen}">
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @Transactional
     public String saveCreateVacant(

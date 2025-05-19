@@ -44,6 +44,8 @@
                 <div class="col-md-3"> 
                   <div class="form-group">
                     <label for="nombre">Nombre</label>
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{imagen}">
                     <input type="text" th:field="*{nombre}" class="form-control" id="nombre" name="nombre" placeholder="Titulo de la oferta de trabajo" required="required">
                   </div>
                 </div>
@@ -59,13 +61,6 @@
                   <div class="form-group">
                     <label for="categoria">Categoría</label>
 
-<!--                    <select class="form-control" th:field="*{ptrCategory.id}" id="categoria">-->
-<!--                      <option th:each="ptrCategory: ${listCategories}"-->
-<!--                              th:value="${ptrCategory.id}"-->
-<!--                              th:text="${ptrCategory.getNombre}">-->
-<!--                              Ventas-->
-<!--                      </option>-->
-<!--                    </select>-->
 
 <!--                                             th:field="*{categoria.id} | Vacancy has Categoria categoria"
                     is sending to VacanciesController/save with the corresponding categoria.id for the Vacancy-->
@@ -129,11 +124,17 @@
                     <label for="detalles"><strong>Detalles</strong></label>          
                     <textarea class="form-control" th:field="*{detalles}" name="detalles" id="detalles" rows="7"></textarea>
                   </div> 
-                </div> 
-                <div class="col-md-3">
-                  <label for="imagen">Imagen/Logo</label>
-                  <img class="rounded mx-auto d-block" src="images/construccion-logo.png" alt="Generic placeholder image" width="200" height="200">            
                 </div>
+
+<!--                <div class="col-md-3">-->
+<!--                  <label for="imagen">Imagen/Logo</label>-->
+<!--                  <img class="rounded mx-auto d-block" src="images/construccion-logo.png" alt="Generic placeholder image" width="200" height="200">            -->
+<!--                </div>-->
+
+                <img class="rounded mx-auto d-block"
+                     th:src="@{/uploads/{image}(image=${vacancy.imagen})}"
+                     alt="Generic placeholder image" width="220" height="220">
+
               </div> 
               <button type="submit" class="btn btn-primary">Guardar</button>  
             </form>

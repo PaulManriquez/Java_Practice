@@ -64,53 +64,36 @@
 <!--                  <td th:text="${ptrVacant.getExcels == 1 ? 'Si' : 'No' }"></td>-->
                   <td>
 
-                    <a href="#" class="btn btn-success btn-sm" role="button" title="Editar">
-                      <i class="fas fa-pencil-alt" aria-hidden="true"></i> Actualizar
-                    </a>
+<!--                    <a href="#" class="btn btn-success btn-sm" role="button" title="Editar">-->
+<!--                      <i class="fas fa-pencil-alt" aria-hidden="true"></i> Actualizar-->
+<!--                    </a>-->
 
-                    <!-- Delete Button with Trash Icon -->
-                    <!-- Edit Button -->
-
-                    <!-- Delete Button with Trash Icon -->
-                    <!-- Delete Button with Trash Icon -->
-                    <a href="#" class="btn btn-danger btn-sm confirmar" role="button" title="Eliminar"
-                       data-toggle="modal" data-target="#deleteModal"
-                       data-id="${ptrVacant.id}"
-                       data-nombre="${ptrVacant.getNombre}">
-                      <i class="fas fa-trash" aria-hidden="true"></i> Eliminar
-                    </a>
+                    <!-- Update Form -->
+                    <form method="post" th:action="@{/vacancies/edit}">
+                      <input type="hidden" name="id" th:value="${ptrVacant.id}" />
+                      <button type="submit" class="btn btn-success btn-sm">
+                        <i class="fas fa-trash" aria-hidden="true"></i> Actualizar
+                      </button>
+                    </form>
 
 
-                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <!-- Modal Header -->
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <!-- Modal Body -->
-
-                          <div class="modal-body">
-                            ¿Estás seguro de que quieres eliminar la oferta de trabajo: <strong id="vacanteNombre" th:text="${ptrVacant.getNombre}"></strong>? Esta acción no se puede deshacer.
-                          </div>
-                          <!-- Modal Footer -->
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-danger" id="confirmDeleteButton">Eliminar</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <!-- Delete Form -->
+                    <form method="post" th:action="@{/vacancies/delete}">
+                      <input type="hidden" name="id" th:value="${ptrVacant.id}" />
+                      <button type="submit" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash" aria-hidden="true"></i> Eliminar
+                      </button>
+                    </form>
 
                   </td>
                 </tr>
-
               </tbody>
             </table>
-            
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div> <!-- /container -->
@@ -132,6 +115,15 @@
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-         
+
+<!--  &lt;!&ndash; ✅ jQuery (Full version, not slim) &ndash;&gt;-->
+<!--  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+
+<!--  &lt;!&ndash; ✅ Popper.js &ndash;&gt;-->
+<!--  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>-->
+
+<!--  &lt;!&ndash; ✅ Bootstrap JS &ndash;&gt;-->
+<!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
   </body>
 </html>

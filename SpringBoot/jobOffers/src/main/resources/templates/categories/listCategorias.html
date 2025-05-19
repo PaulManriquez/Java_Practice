@@ -57,9 +57,12 @@
                     </a>
 
                     <!-- Delete Button with Trash Icon -->
-                    <a href="#" class="btn btn-danger btn-sm confirmar" role="button" title="Eliminar">
-                      <i class="fas fa-trash" aria-hidden="true"></i> Eliminar
-                    </a>
+                      <form method="post" th:action="@{/categories/delete}">
+                          <input type="hidden" name="id" th:value="${ptrCategoria.getId}" />
+                          <button type="submit" class="btn btn-danger btn-sm">
+                              <i class="fas fa-trash" aria-hidden="true"></i> Eliminar
+                          </button>
+                      </form>
 
                   </td>
                 </tr>
