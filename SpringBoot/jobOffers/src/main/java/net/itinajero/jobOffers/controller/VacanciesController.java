@@ -56,7 +56,7 @@ public class VacanciesController {
             @RequestParam("id") int idVacante,
             Model model
     ){
-        System.out.println("======> ID("+idVacante + ")");
+//        System.out.println("======> ID("+idVacante + ")");
 
 
         Optional optVac = repositoryVacants.findById(idVacante);

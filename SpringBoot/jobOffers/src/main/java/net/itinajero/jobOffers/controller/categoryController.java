@@ -40,6 +40,58 @@ public class categoryController {
         return "categories/listCategorias";
     }
 
+    @PostMapping("/edit")
+    public String updateCategoria(
+            @RequestParam("id") int idCategory,
+            RedirectAttributes redirectAttributes,
+            Model model
+    ){
+        System.out.println("======> ID("+idCategory + ")");
+
+        Optional<Categorias> cat = repositoryCategorias.findById(idCategory);
+        if(cat.isPresent()){
+            Categorias catToEdit = cat.get();
+            model.addAttribute("categoriaObj", catToEdit);
+            return "categories/formCategory";
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "Categoria no existe");
+            return "redirect:/categories/index";
+        }
+    }
+
+
+    //return the template
+    @GetMapping("/create")
+    public String createCategoria(Categorias catToEdit,
+                         Model model){
+        model.addAttribute("categoriaObj",catToEdit);
+        return "categories/formCategory";
+    }
+
+    // Spring will look for the existence of this id , if exist UPDATE else CREATE
+    // <input type="hidden" th:field="*{id}" />
+    @PostMapping("/save")
+    public String saveCategoryController(
+            @ModelAttribute Categorias categoria,
+            BindingResult result,
+            RedirectAttributes attributes
+            //Model model
+    ) {
+
+        if (result.hasErrors()) {
+            System.out.println("An error has happened in SaveCategoryController");
+            return "categories/formCategory";
+        }
+
+        //categoria.setId(categoria.currentId + 1); // manually managing ID? Consider fixing this later.
+//        categoriesService.guardar(categoria);
+        repositoryCategorias.save(categoria);
+        attributes.addFlashAttribute("msg", "New Register Saved");
+
+        return "redirect:/categories/index";
+    }
+
+
     @PostMapping("/delete")
     public String deleteVacant(
             @RequestParam("id") int idCategory,
@@ -71,31 +123,6 @@ public class categoryController {
     }
 
 
-    //return the template
-    @GetMapping("/create")
-    public String create(){
-        return "categories/formCategory";
-    }
 
-    @PostMapping("/save")
-    public String saveCategoryController(
-            @ModelAttribute Categorias categoria,
-            BindingResult result,
-            RedirectAttributes attributes
-            //Model model
-            ) {
-
-        if (result.hasErrors()) {
-            System.out.println("An error has happened in SaveCategoryController");
-            return "categories/formCategory";
-        }
-
-        //categoria.setId(categoria.currentId + 1); // manually managing ID? Consider fixing this later.
-//        categoriesService.guardar(categoria);
-        repositoryCategorias.save(categoria);
-        attributes.addFlashAttribute("msg", "New Register Saved");
-
-        return "redirect:/categories/index";
-    }
 
 }

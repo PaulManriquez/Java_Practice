@@ -2,6 +2,7 @@ package net.itinajero.jobOffers.controller;
 import net.itinajero.jobOffers.Repository.RepositoryVacants;
 import net.itinajero.jobOffers.Service.IVacantsService;
 import net.itinajero.jobOffers.Servicee.VacantesService;
+import net.itinajero.jobOffers.model.Usuarios;
 import net.itinajero.jobOffers.model.Vacancy;
 import net.itinajero.jobOffers.model.Vacantes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.File;
 import java.text.ParseException;
@@ -45,6 +47,23 @@ public class homeController {
         model.addAttribute("vacantsList", listVacancies);
 
         return "home";
+    }
+
+    @GetMapping("/registrarse")
+    public String registrarsePage(){
+        return "formRegistro";
+    }
+
+    @PostMapping("/saveRegistro")
+    public String saveRegister(
+            Usuarios usuario
+    ){
+
+        System.out.println(
+                usuario.getNombre() + usuario.getEmail()  + usuario.getUsername() + usuario.getPassword() );
+
+
+        return "formRegistro";
     }
 
     @GetMapping("/details/{id}")

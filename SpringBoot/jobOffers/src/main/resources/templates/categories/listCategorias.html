@@ -51,10 +51,14 @@
                   <td>
 <!--                    <a href="#" class="btn btn-success btn-sm" role="button" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>-->
 <!--                    <a href="#" class="btn btn-success btn-sm confirmar" role="button" title="Eliminar"><i class="fas fa-trash" aria-hidden="true"></i></a>-->
-                    <!-- Edit Button with Pencil Icon -->
-                    <a href="#" class="btn btn-success btn-sm" role="button" title="Editar">
-                      <i class="fas fa-pencil-alt" aria-hidden="true"></i> Actualizar
-                    </a>
+                      <!-- Delete Button with Trash Icon -->
+                      <form method="post" th:action="@{/categories/edit}">
+                          <input type="hidden" name="id" th:value="${ptrCategoria.getId}" />
+                          <button type="submit" class="btn btn-success btn-sm">
+                              <i class="fas fa-trash" aria-hidden="true"></i> Actualizar
+                          </button>
+                      </form>
+
 
                     <!-- Delete Button with Trash Icon -->
                       <form method="post" th:action="@{/categories/delete}">
