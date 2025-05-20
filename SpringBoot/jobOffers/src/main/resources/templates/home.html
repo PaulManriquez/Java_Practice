@@ -17,9 +17,7 @@
 
 <body>
 
-<header th:insert="fragments/menu :: main-menu">
-
-</header>
+<header th:insert="fragments/menu :: main-menu"></header>
 
 <main role="main">
 
@@ -28,15 +26,16 @@
         <div class="container">
             <h3>Encuentra el trabajo que andas buscando.</h3>
             Puedes buscar por descripción y categoría.
-            <form class="form-inline">
-                <input type="text" class="form-control mb-3" id="exampleFormControlInput1" placeholder="Escriba una búsqueda">&nbsp;
-                <select class="custom-select custom-select mb-3">
-                    <option selected>Seleccione una categoría</option>
-                    <option value="1">Ventas</option>
-                    <option value="2">Contabilidad</option>
-                    <option value="3">Transporte</option>
-                    <option value="4">Informática</option>
-                    <option value="5">Construcción</option>
+                                        <!--DATA BINDING -->
+            <form class="form-inline" th:action="@{/search}" method="get" th:object="${searchVac}">
+                <input type="text" th:field="*{description}" class="form-control mb-3" id="exampleFormControlInput1" placeholder="Escriba una búsqueda">&nbsp;
+                <select th:field="*{categoria.id}" class="custom-select custom-select mb-3">
+                    <option th:value="${null}" selected>Seleccione una categoría</option>
+                    <option th:each="ptrCat: ${categoriasList}"
+                            th:value="${ptrCat.id}"
+                            th:text="${ptrCat.nombre}"
+                    ></option>
+
                 </select>&nbsp;
                 <button type="submit" class="btn btn-primary mb-3">Buscar</button>
             </form>

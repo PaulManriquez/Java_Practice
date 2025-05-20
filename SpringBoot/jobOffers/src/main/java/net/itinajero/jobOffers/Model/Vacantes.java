@@ -111,4 +111,24 @@ public class Vacantes {
     public void setCategoria(Categorias categoria) {
         this.categoria = categoria;
     }
+
+    public void reset(){
+        this.imagen = null;
+    }
+
+    @Override
+    public String toString() {
+        return "Vacantes{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", description='" + description + '\'' +
+                ", fecha=" + fecha +
+                ", salario=" + salario +
+                ", destacado=" + destacado +
+                ", imagen='" + imagen + '\'' +
+                ", estatus='" + estatus + '\'' +
+                ", detalles='" + detalles + '\'' +
+                ", categoria=" + categoria +
+                '}';
+    }
 }

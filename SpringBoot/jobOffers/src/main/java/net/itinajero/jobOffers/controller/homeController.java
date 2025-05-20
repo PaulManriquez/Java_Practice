@@ -1,22 +1,17 @@
 package net.itinajero.jobOffers.controller;
-import net.itinajero.jobOffers.Repository.RepositoryPerfil;
-import net.itinajero.jobOffers.Repository.RepositoryUsuarios;
-import net.itinajero.jobOffers.Repository.RepositoryUsuariosPerfil;
-import net.itinajero.jobOffers.Repository.RepositoryVacants;
+import net.itinajero.jobOffers.Repository.*;
 import net.itinajero.jobOffers.Service.IVacantsService;
 import net.itinajero.jobOffers.Servicee.UsuariosService;
 import net.itinajero.jobOffers.Servicee.VacantesService;
 import net.itinajero.jobOffers.Model.UsuarioPerfil;
-import net.itinajero.jobOffers.model.Usuarios;
-import net.itinajero.jobOffers.model.Vacancy;
-import net.itinajero.jobOffers.model.Vacantes;
+import net.itinajero.jobOffers.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import net.itinajero.jobOffers.model.Perfiles;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
@@ -53,21 +48,43 @@ public class homeController {
     @Autowired
     private UsuariosService usuariosService;
 
+    @Autowired
+    private RepositoryCategorias repositoryCategorias;
+
     //=======================================
     @GetMapping("/")
     public String displayHome(Model model){
 //        List<Vacantes> listVacancies = repositoryVacants.findAll();
         List<Vacantes> listVacancies = vacantesService.getDestacadosAprobados();
+        List<Categorias> listCategorias = repositoryCategorias.findAll();
 
         // Log the image path to see if it matches what you expect
-        for (Vacantes ptrV : listVacancies) {
-            String imagePath = "/uploads/" + ptrV.getImagen(); // This matches the URL path you will use
-            System.out.println("Image URL path for image " + ptrV.getImagen() + ": " + imagePath);
-        }
+//        for (Vacantes ptrV : listVacancies) {
+//            String imagePath = "/uploads/" + ptrV.getImagen(); // This matches the URL path you will use
+//            System.out.println("Image URL path for image " + ptrV.getImagen() + ": " + imagePath);
+//        }
 
         model.addAttribute("vacantsList", listVacancies);
-
+        model.addAttribute("categoriasList",listCategorias);
         return "home";
+    }
+
+    @GetMapping("/search")
+    public String searchVacantesBySelect(
+            @ModelAttribute("searchVac") Vacantes vacante
+    ){
+        System.out.println("Searching... ===>"+ vacante);
+        return "home";
+    }
+
+    @ModelAttribute
+    public void setGenericos(Model model){
+
+        //======================================================
+        Vacantes vacanteSearch = new Vacantes();
+        vacanteSearch.reset();//Set as null to the image attribute
+        model.addAttribute("searchVac",vacanteSearch);
+        //======================================================
     }
 
     //Returns the form to register
@@ -118,16 +135,6 @@ public class homeController {
         }
     }
 
-//        usuariosService.deleteUsuario(idUsuario);
-
-    @GetMapping("/mostrarUsuarios")
-    public String displayUsuarios(
-            Model model
-    ){
-        List<Usuarios> listUsuarios = repositoryUsuarios.findAll();
-        model.addAttribute("usuarioL",listUsuarios);
-        return "home/listUsuarios";
-    }
 
     @GetMapping("/details/{id}")
     public String displayDetails(
