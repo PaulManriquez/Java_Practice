@@ -6,12 +6,13 @@ import net.itinajero.jobOffers.Servicee.VacantesService;
 import net.itinajero.jobOffers.Model.UsuarioPerfil;
 import net.itinajero.jobOffers.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
@@ -71,10 +72,34 @@ public class homeController {
 
     @GetMapping("/search")
     public String searchVacantesBySelect(
-            @ModelAttribute("searchVac") Vacantes vacante
+            @ModelAttribute("searchVac") Vacantes vacante, //Certain properties of an object are filled
+            Model model
     ){
         System.out.println("Searching... ===>"+ vacante);
+        List<Categorias> listCategorias = repositoryCategorias.findAll();
+        model.addAttribute("categoriasList",listCategorias);
+
+        //==== Find all the vacantes based on the e(xample)
+        //Execute the query as LIKE for the column 'description'
+        ExampleMatcher matcher =
+                ExampleMatcher.matching().
+                        withMatcher("description",
+                                ExampleMatcher.GenericPropertyMatchers.contains());
+        //====
+        Example<Vacantes> example = Example.of(vacante,matcher);
+        List<Vacantes> listV = repositoryVacants.findAll(example);
+        //========================================================
+        model.addAttribute("vacantsList",listV);
+
         return "home";
+    }
+
+    //InitiBinder to Strings, detects if several empty strings are in the data binding
+    //and will set them to null vid(125)
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        //Set objects String property from '' to null
+        binder.registerCustomEditor(String.class,new StringTrimmerEditor(true));
     }
 
     @ModelAttribute

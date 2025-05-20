@@ -89,6 +89,21 @@
                 </tr>
               </tbody>
             </table>
+
+              <nav th:if="${vacantsList.totalPages > 0}" aria-label="Page navigation Example">
+                <ul class="pagination">
+
+                    <li class="page-item">
+                        <a th:href="@{/vacancies/indexPaginate(page=${vacantsList.number -1} )}" class="page-link"> Anterior</a>
+                    </li>
+
+                    <li class="page-item">
+                        <a th:href="@{/vacancies/indexPaginate(page=${vacantsList.number +1} )}" class="page-link"> Siguiente</a>
+                    </li>
+
+                </ul>
+              </nav>
+
                   </div>
                 </div>
               </div>

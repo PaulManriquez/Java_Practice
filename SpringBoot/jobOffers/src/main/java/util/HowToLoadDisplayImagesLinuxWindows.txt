@@ -89,3 +89,6 @@ public String displayHome(Model model) {
     model.addAttribute("vacantsList", listVacancies);
     return "home";
 }
+
+
+Using generated security password: 2c27e495-a65c-4f3c-8774-e4d7928a514d

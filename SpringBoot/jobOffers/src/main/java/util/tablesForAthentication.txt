@@ -1,0 +1,37 @@
+-- Crear tabla de usuarios
+CREATE TABLE `users` (
+	`username` varchar(50) NOT NULL,
+	`password` varchar(50) NOT NULL,
+	`enabled` tinyint NOT NULL,
+	PRIMARY KEY (`username`)
+) ENGINE=InnoDB;
+
+-- Crear tabla de roles
+CREATE TABLE `authorities` (
+	`username` varchar(50) NOT NULL,
+	`authority` varchar(50) NOT NULL,
+	UNIQUE KEY `authorities_idx_1` (`username`,`authority`),
+	CONSTRAINT `authorities_ibfk_1`
+	FOREIGN KEY (`username`)
+	REFERENCES `users` (`username`)
+) ENGINE=InnoDB;
+
+-- Insertamos nuestros usuarios
+INSERT INTO `users` VALUES ('luis','{noop}luis123',1);
+INSERT INTO `users` VALUES ('marisol','{noop}mari123',1);
+
+-- Insertamos (asignamos roles) a nuestros usuarios.
+INSERT INTO `authorities` VALUES ('luis','SUPERVISOR');
+INSERT INTO `authorities` VALUES ('marisol','ADMINISTRADOR');
+
+
+===
+-- Insertamos 2 usuarios
+INSERT INTO `Usuarios` VALUES (7,'Luis Esparza Gomez','luis@itinajero.net','luis','{noop}luis123',1,'2019-06-10');
+INSERT INTO `Usuarios` VALUES (8,'Marisol Salinas Rodarte','marisol@itinajero.net','marisol','{noop}mari123',1,'2019-06-10');
+Select * from Usuarios;
+-- Insertamos los roles para los usuarios
+INSERT INTO webpagedb.usuario_perfil (idUsuario,idPerfil) VALUES (7, 1); -- PERFIL SUPERVISOR
+INSERT INTO webpagedb.usuario_perfil (idUsuario,idPerfil)VALUES (8, 2); -- PERFIL ADMINISTRADOR
+
+ select * from usuario_perfil;
