@@ -27,11 +27,41 @@ INSERT INTO `authorities` VALUES ('marisol','ADMINISTRADOR');
 
 ===
 -- Insertamos 2 usuarios
-INSERT INTO `Usuarios` VALUES (7,'Luis Esparza Gomez','luis@itinajero.net','luis','{noop}luis123',1,'2019-06-10');
-INSERT INTO `Usuarios` VALUES (8,'Marisol Salinas Rodarte','marisol@itinajero.net','marisol','{noop}mari123',1,'2019-06-10');
+INSERT INTO `Usuarios` VALUES (7,'Luis Esparza Gomez','luis@itinajero.net','luis','{noop}luis123',1,'2019-06-10');11
+INSERT INTO `Usuarios` VALUES (8,'Marisol Salinas Rodarte','marisol@itinajero.net','marisol','{noop}mari123',1,'2019-06-10');12
 Select * from Usuarios;
 -- Insertamos los roles para los usuarios
-INSERT INTO webpagedb.usuario_perfil (idUsuario,idPerfil) VALUES (7, 1); -- PERFIL SUPERVISOR
-INSERT INTO webpagedb.usuario_perfil (idUsuario,idPerfil)VALUES (8, 2); -- PERFIL ADMINISTRADOR
+INSERT INTO webpagedb.usuario_perfil (idUsuario,idPerfil) VALUES (7, 1);11 -- PERFIL SUPERVISOR
+INSERT INTO webpagedb.usuario_perfil (idUsuario,idPerfil)VALUES (8, 2); 12-- PERFIL ADMINISTRADOR
 
  select * from usuario_perfil;
+
+
+ ====
+ update perfiles set perfil = 'SUPERVISOR' where id = 1;
+
+mysql> update perfiles set perfil = 'SUPERVISOR' where id = 1;
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update perfiles set perfil = 'ADMINISTRADOR' where id = 2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update perfiles set perfil = 'USUARIO' where id = 3;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> insert into perfiles (perfil) VALUES ('USUARIO');
+Query OK, 1 row affected (0.01 sec)
+
+--Get the respective role by id
+SELECT u.nombre, b.idUsuario, p.perfil
+FROM usuarios AS u
+INNER JOIN usuario_perfil AS b
+ON u.id = b.idUsuario
+inner join perfiles as p
+on b.idPerfil = p.id
+WHERE u.id = 12;
+
+
