@@ -43,10 +43,18 @@ public class DatabaseWebSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth //The users with this profiles have permissions
+
+                                //The Static resources do not requiere authentication
+                                .requestMatchers("/bootstrap/**","/imagenes/**","/tinymce/**","/logos/**").permitAll()
+
+                        //The public views do not requiere authntication
+//                                .requestMatchers("/","/login","/signup","/search","/vacantes/view/**").permitAll()
+                                .requestMatchers("/","vacancies/indexPaginate").permitAll()
                         .requestMatchers("/vacancies/**").hasAnyAuthority("SUPERVISOR", "ADMINISTRADOR")
                         .requestMatchers("/categories/**").hasAnyAuthority("SUPERVISOR", "ADMINISTRADOR")
                         .requestMatchers("/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
                         .anyRequest().authenticated()
+
                 )
                 .formLogin(withDefaults()); // or customize login
 
