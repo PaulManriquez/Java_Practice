@@ -37,8 +37,13 @@
             </li>
 
         </ul>
-        <a class="btn btn-primary" th:href="@{/index}">Ingresar</a>&nbsp;
-        <a class="btn btn-primary" th:href="@{/registrarse}">Registrarse</a>
-        <a class="btn btn-primary" th:href="@{/logout}">Salir</a>
+        <div sec:authorize="isAnonymous()">
+            <a class="btn btn-primary" th:href="@{/index}">Ingresar</a>&nbsp;
+            <a class="btn btn-primary" th:href="@{/registrarse}">Registrarse</a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <span th:if="${session.usuario != null}" class="text-light" th:text=" 'Bienvenid@ ' + ${session.usuario.nombre}"></span>
+            <a class="btn btn-primary" th:href="@{/logout}">Salir</a>
+        </div>
     </div>
 </nav>

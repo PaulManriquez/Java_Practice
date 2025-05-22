@@ -1,4 +1,5 @@
 package net.itinajero.jobOffers.controller;
+import jakarta.servlet.http.HttpSession;
 import net.itinajero.jobOffers.Repository.*;
 import net.itinajero.jobOffers.Service.IVacantsService;
 import net.itinajero.jobOffers.Servicee.UsuariosService;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +59,9 @@ public class homeController {
 
     @Autowired
     private RepositoryCategorias repositoryCategorias;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     //=======================================
     @GetMapping("/")
@@ -134,6 +140,10 @@ public class homeController {
         if(optPerfil.isPresent()){
             Perfiles per = (Perfiles) optPerfil.get(); //Get the perfil concerning to this user
 
+            String pwdAsComes = usuario.getPassword();
+            String pwdEncriptado = passwordEncoder.encode(pwdAsComes);
+            usuario.setPassword(pwdEncriptado);
+
             Date currentDate = (Date) getDateFormattedAsDate();//Formated Date
             usuario.setFechaRegistro(currentDate);//Set Date to usuario
             usuario.setEstatus(1);//Set estatus
@@ -206,9 +216,23 @@ public class homeController {
 
 
     @GetMapping("/index")
-    public String mostrarIndex(Authentication auth){
+    public String mostrarIndex(Authentication auth, HttpSession session){
         String username = auth.getName();
         System.out.println("====> " + username);
+
+        for(GrantedAuthority rol:auth.getAuthorities()){
+            System.out.println("ROL: " + rol.getAuthority());
+        }
+
+        //Create a Usuario object to the session to
+        //              Create a session to the usuario
+        if(session.getAttribute("usuario")==null){
+            Usuarios usuario = repositoryUsuarios.findByUsername(username);
+            usuario.setPassword(null);// <-- avoid store the password in the session
+            session.setAttribute("usuario",usuario);
+            System.out.println("Usuario founded:" + usuario);
+        }
+        //=============================================================
         return "redirect:/";
     }
 }

@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -49,7 +51,7 @@ public class DatabaseWebSecurity {
 
                         //The public views do not requiere authntication
 //                                .requestMatchers("/","/login","/signup","/search","/vacantes/view/**").permitAll()
-                                .requestMatchers("/","vacancies/indexPaginate").permitAll()
+                                .requestMatchers("/","vacancies/indexPaginate","/registrarse","/saveRegistro").permitAll()
                         .requestMatchers("/vacancies/**").hasAnyAuthority("SUPERVISOR", "ADMINISTRADOR")
                         .requestMatchers("/categories/**").hasAnyAuthority("SUPERVISOR", "ADMINISTRADOR")
                         .requestMatchers("/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
@@ -59,6 +61,11 @@ public class DatabaseWebSecurity {
                 .formLogin(withDefaults()); // or customize login
 
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
 }

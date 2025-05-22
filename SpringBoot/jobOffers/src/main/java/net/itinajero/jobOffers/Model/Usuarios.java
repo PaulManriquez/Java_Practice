@@ -72,4 +72,16 @@ public class Usuarios{
     public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+
+    @Override
+    public String toString() {
+        return "Usuarios{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", email='" + email + '\'' +
+                ", estatus=" + estatus +
+                ", fechaRegistro=" + fechaRegistro +
+                '}';
+    }
 }
