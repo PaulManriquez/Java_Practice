@@ -5,6 +5,11 @@ import net.itinajero.jobOffers.Servicee.UsuariosService;
 import net.itinajero.jobOffers.Servicee.VacantesService;
 import net.itinajero.jobOffers.Model.UsuarioPerfil;
 import net.itinajero.jobOffers.model.*;
+import net.itinajero.jobOffers.model.Categorias;
+import net.itinajero.jobOffers.model.Perfiles;
+import net.itinajero.jobOffers.model.Usuarios;
+import net.itinajero.jobOffers.model.Vacantes;
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Example;
@@ -199,4 +204,11 @@ public class homeController {
         return "displayVacancyTable";
     }
 
+
+    @GetMapping("/index")
+    public String mostrarIndex(Authentication auth){
+        String username = auth.getName();
+        System.out.println("====> " + username);
+        return "redirect:/";
+    }
 }
