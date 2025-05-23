@@ -2,7 +2,7 @@ package net.itinajero.jobOffers.Servicee;
 
 
 import net.itinajero.jobOffers.Repository.RepositoryCategorias;
-import net.itinajero.jobOffers.model.Categorias;
+import net.itinajero.jobOffers.Model.Categorias;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

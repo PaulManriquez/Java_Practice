@@ -17,31 +17,7 @@
 
 <body>
 
-<header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand"
-        >EmpleosApp</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Menu 1</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Menu 2</a>
-                </li>
-            </ul>
-            <a class="btn btn-primary" href="#">Ingresar</a>&nbsp;
-            <a class="btn btn-primary" href="#">Registrarse</a>
-        </div>
-    </nav>
-</header>
+<header th:insert="fragments/menu :: main-menu"></header>
 
 <main role="main">
     <hr>
@@ -61,6 +37,11 @@
                 <div class="card">
                     <h4 class="card-header">Aplicar para <strong th:text="${VacantObj.getNombre}"></strong></h4>
                     <div class="card-body">
+
+                        <div class="alert alert-danger" role="alert" sec:authorize="{isAnonymous()}">
+                            Te interesa esta vacante? <strong>Registrate</strong>
+                        </div>
+
                         <h5 class="card-title"><strong>Categoría: </strong> <span th:text="${VacantObj.getCategoria.getNombre}">Nombre la categoría</span></h5>
                         <h6 class="card-title"><strong>Publicado: </strong> <span th:text="${VacantObj.getFecha}"></span></h6>
                         <h6 class="card-title"><strong>Salario Ofrecido: </strong><span th:text = "${VacantObj.getSalario}">$9000</span></h6>
@@ -72,7 +53,10 @@
                                 <p class="card-text" th:utext="${VacantObj.getDetalles}">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                             </div>
                         </div>
-                        <a class="btn btn-primary" href="#" role="button" title="Quiero aplicar para esta oferta de trabajo."><i class="fas fa-file" aria-hidden="true"></i> Aplicar</a>
+
+                        <a sec:authorize="isAuthenticated() and hasAnyAuthority('USUARIO')"  class="btn btn-primary"
+                           th:href="@{/solicitudes/create/{id} (id=${VacantObj.id})}"
+                           role="button" title="Quiero aplicar para esta oferta de trabajo."><i class="fas fa-file" aria-hidden="true"></i> Aplicar</a>
                     </div>
                 </div>
             </div>

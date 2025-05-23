@@ -1,15 +1,18 @@
 package net.itinajero.jobOffers.Servicee;
 
 
+import net.itinajero.jobOffers.Service.InterfaceSolicitudesService;
 import net.itinajero.jobOffers.model.Solicitudes;
 import net.itinajero.jobOffers.model.Usuarios;
-import net.itinajero.jobOffers.model.Vacantes;
+import net.itinajero.jobOffers.Model.Vacantes;
 import net.itinajero.jobOffers.Repository.RepositorySolicitudes;
 import net.itinajero.jobOffers.Repository.RepositoryUsuarios;
 import net.itinajero.jobOffers.Repository.RepositoryVacants;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -17,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SolicitudesService {
+public class SolicitudesService implements InterfaceSolicitudesService {
 
     @Autowired
     RepositoryUsuarios repositoryUsuarios;
@@ -50,8 +53,9 @@ public class SolicitudesService {
         }
     }
 
+
     @Transactional
-    public void displayAllSolicitudes(){
+    public List<Solicitudes> getAllSolicitudes(){
         List<Solicitudes> solicitudes = repositorySolicitudes.findAll();
         if(!solicitudes.isEmpty()){
             for(Solicitudes ptrS:solicitudes){
@@ -62,6 +66,41 @@ public class SolicitudesService {
         }else{
             System.out.println("There are no data in solicitudes");
         }
+        return solicitudes;
     }
+
+
+    @Override
+    public void guardar(Solicitudes solicitud) {
+        repositorySolicitudes.save(solicitud);
+    }
+
+    @Override
+    public void eliminar(Integer idSolicitud) {
+        Optional optDelete = repositorySolicitudes.findById(idSolicitud);
+        if(!optDelete.isEmpty()){
+            repositorySolicitudes.deleteById(idSolicitud);
+            System.out.println("The deletion was completed");
+        }else{
+            System.out.println("The solicitud doesnt exist");
+        }
+    }
+
+    @Override
+    public Solicitudes buscarPorID(Integer idSolicitud) {
+        Optional optSolicitud = repositorySolicitudes.findById(idSolicitud);
+
+        if(optSolicitud.isPresent()){
+            return (Solicitudes) optSolicitud.get();
+        }
+
+        return null;
+    }
+
+    @Override
+    public Page<Solicitudes> getTodasbyPage(Pageable page) {
+        return repositorySolicitudes.findAll(page);
+    }
+
 
 }

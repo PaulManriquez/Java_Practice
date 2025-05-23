@@ -62,6 +62,24 @@ INNER JOIN usuario_perfil AS b
 ON u.id = b.idUsuario
 inner join perfiles as p
 on b.idPerfil = p.id
-WHERE u.id = 12;
+WHERE u.id = 13;
 
+==========================
+mysql> UPDATE password SET value = '$2a$10$UFu2dPcgo10U8qR9H5wmZe/rw2MBx0s1BrbZdV/RKICMuA7fXA5ne' WHERE id = 11;
+ERROR 1146 (42S02): Table 'webpageDB.password' doesn't exist
+mysql> UPDATE usuarios SET password = '$2a$10$UFu2dPcgo10U8qR9H5wmZe/rw2MBx0s1BrbZdV/RKICMuA7fXA
+5ne' WHERE id = 11;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE usuarios SET password = '$2a$10$E3/Dot53E3ClcV9xrEfTs.lbSrMVbRG6f6l1uEbTiRDSQtEFQ8jom' WHERE id = 12;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+========================================
+INSERT INTO `users` VALUES ('paul22','{noop}paul123',1);
+INSERT INTO `authorities` VALUES ('paul22','USUARIO');
+INSERT INTO `usuarios` VALUES (13,'Paul Alfredo Manriquez','paul@itinajero.net','paul','{noop}paul123',1,'2019-06-22');
+INSERT INTO usuario_perfil (idUsuario,idPerfil) VALUES (13, 3);
+UPDATE usuarios SET password = '$2a$10$g.jrH7CBtaEcTdxPC.1RzuND0W04fGqi2iPzpNJfUZO0JbjbSru3S' WHERE id = 13;
 

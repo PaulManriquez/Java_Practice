@@ -1,11 +1,11 @@
 package net.itinajero.jobOffers.controller;
 
 import net.itinajero.jobOffers.Repository.RepositoryVacants;
-import net.itinajero.jobOffers.model.Categorias;
+import net.itinajero.jobOffers.Model.Categorias;
 import net.itinajero.jobOffers.Repository.RepositoryCategorias;
 import net.itinajero.jobOffers.Service.ICategoriasService;
 import net.itinajero.jobOffers.model.Categoria;
-import net.itinajero.jobOffers.model.Vacantes;
+import net.itinajero.jobOffers.Model.Vacantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

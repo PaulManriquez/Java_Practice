@@ -1,4 +1,5 @@
 package net.itinajero.jobOffers.controller;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import net.itinajero.jobOffers.Repository.*;
 import net.itinajero.jobOffers.Service.IVacantsService;
@@ -6,10 +7,10 @@ import net.itinajero.jobOffers.Servicee.UsuariosService;
 import net.itinajero.jobOffers.Servicee.VacantesService;
 import net.itinajero.jobOffers.Model.UsuarioPerfil;
 import net.itinajero.jobOffers.model.*;
-import net.itinajero.jobOffers.model.Categorias;
+import net.itinajero.jobOffers.Model.Categorias;
 import net.itinajero.jobOffers.model.Perfiles;
 import net.itinajero.jobOffers.model.Usuarios;
-import net.itinajero.jobOffers.model.Vacantes;
+import net.itinajero.jobOffers.Model.Vacantes;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +81,20 @@ public class homeController {
         model.addAttribute("vacantsList", listVacancies);
         model.addAttribute("categoriasList",listCategorias);
         return "home";
+    }
+
+    @GetMapping("/login")
+    public String formLogin(){
+        return "home/formLogin";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+
+        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+
+        logoutHandler.logout(request,null,null);
+        return "redirect:/login";
     }
 
     @GetMapping("/search")
@@ -191,18 +207,13 @@ public class homeController {
         }
     }
 
-//    @GetMapping("/listOffers")
-//    public String displayOffersList(Model model){
-//        List <String> jobList = new LinkedList<String>();
-//        jobList.add("job offer 1");
-//        jobList.add("job offer 2");
-//        jobList.add("job offer 3");
-//        jobList.add("job offer 4");
-//
-//        model.addAttribute("jobList",jobList);
-//        return "jobOffers";
-//    }
+    //Encript a text passed in this endpoint
+    @GetMapping("/bcrypt/{textToEncript}")
+    @ResponseBody
+    public String encript(@PathVariable("textToEncript") String textToEncript){
 
+        return textToEncript + " encripted ans:"+passwordEncoder.encode(textToEncript);
+    }
 
 
 //

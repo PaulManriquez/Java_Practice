@@ -7,8 +7,8 @@ import net.itinajero.jobOffers.Repository.RepositoryCategorias;
 import net.itinajero.jobOffers.Repository.RepositoryVacants;
 
 import jakarta.transaction.Transactional;
-import net.itinajero.jobOffers.model.Categorias;
-import net.itinajero.jobOffers.model.Vacantes;
+import net.itinajero.jobOffers.Model.Categorias;
+import net.itinajero.jobOffers.Model.Vacantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;

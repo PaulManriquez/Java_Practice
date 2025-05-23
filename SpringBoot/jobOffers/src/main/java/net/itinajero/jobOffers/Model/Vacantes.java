@@ -1,7 +1,7 @@
-package net.itinajero.jobOffers.model;
+package net.itinajero.jobOffers.Model;
 
 import jakarta.persistence.*;
-import net.itinajero.jobOffers.model.Categorias;
+import net.itinajero.jobOffers.Model.Categorias;
 
 import java.util.Date;
 
