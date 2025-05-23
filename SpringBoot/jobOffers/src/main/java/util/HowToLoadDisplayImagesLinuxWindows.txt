@@ -92,3 +92,5 @@ public String displayHome(Model model) {
 
 
 Using generated security password: 2c27e495-a65c-4f3c-8774-e4d7928a514d
+
+****Habilitar los recursos estaticos de las imagenes para todos

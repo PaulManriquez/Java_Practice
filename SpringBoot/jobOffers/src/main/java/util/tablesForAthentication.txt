@@ -65,7 +65,7 @@ on b.idPerfil = p.id
 WHERE u.id = 13;
 
 ==========================
-mysql> UPDATE password SET value = '$2a$10$UFu2dPcgo10U8qR9H5wmZe/rw2MBx0s1BrbZdV/RKICMuA7fXA5ne' WHERE id = 11;
+mysql> UPDATE usuarios SET password = '$2a$10$UFu2dPcgo10U8qR9H5wmZe/rw2MBx0s1BrbZdV/RKICMuA7fXA5ne' WHERE id = 11;
 ERROR 1146 (42S02): Table 'webpageDB.password' doesn't exist
 mysql> UPDATE usuarios SET password = '$2a$10$UFu2dPcgo10U8qR9H5wmZe/rw2MBx0s1BrbZdV/RKICMuA7fXA
 5ne' WHERE id = 11;
