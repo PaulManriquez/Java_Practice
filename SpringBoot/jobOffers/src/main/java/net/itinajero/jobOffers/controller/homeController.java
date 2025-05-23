@@ -73,10 +73,11 @@ public class homeController {
         List<Categorias> listCategorias = repositoryCategorias.findAll();
 
         // Log the image path to see if it matches what you expect
-//        for (Vacantes ptrV : listVacancies) {
-//            String imagePath = "/uploads/" + ptrV.getImagen(); // This matches the URL path you will use
-//            System.out.println("Image URL path for image " + ptrV.getImagen() + ": " + imagePath);
-//        }
+        for (Vacantes ptrV : listVacancies) {
+            String imagePath = "/uploads/" + ptrV.getImagen();
+            System.out.println("Image URL path for image " + ptrV.getImagen() + ": " + imagePath);
+
+        }
 
         model.addAttribute("vacantsList", listVacancies);
         model.addAttribute("categoriasList",listCategorias);

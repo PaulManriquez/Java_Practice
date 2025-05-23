@@ -46,11 +46,11 @@ public class DatabaseWebSecurity {
         http.authorizeHttpRequests(auth -> auth //The users with this profiles have permissions
 
                                 //The Static resources do not requiere authentication
-                                .requestMatchers("/bootstrap/**","/images/**","/tinymce/**","/logos/**","detailsView").permitAll()
+                                .requestMatchers("/uploads/**","/bootstrap/**","/images/**","/tinymce/**","/logos/**","detailsView").permitAll()
 
                         //The public views do not requiere authntication
 //                                .requestMatchers("/","/login","/signup","/search","/vacantes/view/**").permitAll()
-                                .requestMatchers("/","vacancies/indexPaginate","/registrarse","/saveRegistro","/details/**",  "/search","/bcrypt/**","/solicitudes/**","solicitudes/save").permitAll()
+                                .requestMatchers("/","vacancies/indexPaginate","/registrarse","/saveRegistro","/details/**",  "/search","/bcrypt/**","/solicitudes/**","solicitudes/save","/uploads/**").permitAll()
                         .requestMatchers("/vacancies/**").hasAnyAuthority("SUPERVISOR", "ADMINISTRADOR")
 //                        .requestMatchers("/categories/**").hasAnyAuthority("SUPERVISOR", "ADMINISTRADOR")
 //                        .requestMatchers("/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
