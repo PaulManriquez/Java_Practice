@@ -51,7 +51,7 @@ public class DatabaseWebSecurity {
                         //The public views do not requiere authntication
 //                                .requestMatchers("/","/login","/signup","/search","/vacantes/view/**").permitAll()
                                 .requestMatchers("/","vacancies/indexPaginate","/registrarse","/saveRegistro","/details/**",  "/search","/bcrypt/**","/solicitudes/**","solicitudes/save","/uploads/**").permitAll()
-                        .requestMatchers("/vacancies/**").hasAnyAuthority("SUPERVISOR", "ADMINISTRADOR")
+                        .requestMatchers("/vacancies/**","/solicitudes/**").hasAnyAuthority("SUPERVISOR", "ADMINISTRADOR")
 //                        .requestMatchers("/categories/**").hasAnyAuthority("SUPERVISOR", "ADMINISTRADOR")
 //                        .requestMatchers("/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
                         .anyRequest().authenticated()

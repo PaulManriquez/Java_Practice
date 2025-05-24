@@ -38,11 +38,12 @@
                 <p class="card-text" th:text="${vacante.description}"></p>
                 <hr>
 
-                <form th:action="@{/solicitudes/save}"th:object="${solicitudes}" method="post" enctype="multipart/form-date">
+                <form th:action="@{/solicitudes/save}"th:object="${solicitudes}" method="post" enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-md-6"> 
                       <div class="form-group">
-                        <input type="hidden" th:name="vacante.id" th:value="${vacante.id}">
+                        <input type="hidden" th:name="vacante.id" th:value="${vacante.id}" >
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                         <label for="comentarios">Comentarios</label>
                         <textarea class="form-control" th:field="*{comentarios}" id="comentarios" rows="2"></textarea>
 
@@ -51,7 +52,7 @@
                     <div class="col-md-6"> 
                       <div class="form-group">
                         <label for="archivoCV">Curriculm Vitae</label>
-                        <input type="file" class="form-control-file" name="archivoCV" id="archivoCV">
+                        <input type="file" class="form-control-file" name="archivoCV" id="archivoCV" accept=".pdf,.doc,.docx">
                         <p class="help-block">Archivos [ pdf,doc,docx ]</p>
                       </div>
                     </div>

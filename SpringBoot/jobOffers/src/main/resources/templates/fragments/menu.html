@@ -13,11 +13,9 @@
                    th:href="@{/}">Inicio</a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">Menu 1</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Menu 2</a>
+            <li class="nav-item" sec:authorize="hasAnyAuthority('SUPERVISOR','ADMINISTRADOR')">
+                <a class="nav-link"
+                   th:href="@{/solicitudes/indexPaginate}">Solicitudes</a>
             </li>
 
             <li class="nav-item" sec:authorize="hasAnyAuthority('SUPERVISOR','ADMINISTRADOR')">

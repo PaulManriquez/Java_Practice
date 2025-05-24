@@ -24,6 +24,7 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
         <div class="container">
+
             <h3>Encuentra el trabajo que andas buscando.</h3>
             Puedes buscar por descripción y categoría.
                                         <!--DATA BINDING -->
@@ -33,8 +34,7 @@
                     <option th:value="${null}" selected>Seleccione una categoría</option>
                     <option th:each="ptrCat: ${categoriasList}"
                             th:value="${ptrCat.id}"
-                            th:text="${ptrCat.nombre}"
-                    ></option>
+                            th:text="${ptrCat.nombre}"></option>
 
                 </select>&nbsp;
                 <button type="submit" class="btn btn-primary mb-3">Buscar</button>
@@ -43,6 +43,7 @@
     </div>
     <hr>
 
+    <div th:if="${msg != null}" class="alert alert-success" th:text="${msg}" role='alert'></div>
     <div class="container">
         <h2 class="font-weight-bold text-center text-capitalize">DESTACADOS</h2>
         <hr>

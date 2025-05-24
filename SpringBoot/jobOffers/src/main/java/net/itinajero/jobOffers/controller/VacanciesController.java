@@ -8,13 +8,10 @@ import net.itinajero.jobOffers.Repository.RepositoryVacants;
 import net.itinajero.jobOffers.Service.ICategoriasService;
 import net.itinajero.jobOffers.Service.IVacantsService;
 import net.itinajero.jobOffers.Servicee.VacantesService;
-import net.itinajero.jobOffers.model.Categoria;
 import net.itinajero.jobOffers.Model.Categorias;
-import net.itinajero.jobOffers.model.Vacancy;
 import net.itinajero.jobOffers.Model.Vacantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.propertyeditors.CustomBooleanEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -51,7 +48,6 @@ public class VacanciesController {
 
     @Autowired
     private VacantesService vacantesService;
-
 
     @PostMapping("/edit")
     public String editVacante(
@@ -135,7 +131,7 @@ public class VacanciesController {
             Model model,
             RedirectAttributes attributes,
             @RequestParam("archivoImagen") MultipartFile multiPart
-    ) {
+    )  {
         if (result.hasErrors()) {
             for (ObjectError error : result.getAllErrors()) {
                 System.out.println("An error has happened: " + error.getDefaultMessage());

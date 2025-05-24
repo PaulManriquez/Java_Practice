@@ -68,7 +68,7 @@ public class homeController {
     //=======================================
     @GetMapping("/")
     public String displayHome(Model model){
-//        List<Vacantes> listVacancies = repositoryVacants.findAll();
+        //List<Vacantes> listVacancies = repositoryVacants.findAll();
         List<Vacantes> listVacancies = vacantesService.getDestacadosAprobados();
         List<Categorias> listCategorias = repositoryCategorias.findAll();
 
