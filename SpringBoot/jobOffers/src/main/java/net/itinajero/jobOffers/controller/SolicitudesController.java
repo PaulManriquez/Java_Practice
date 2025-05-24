@@ -42,6 +42,22 @@ public class SolicitudesController {
     @Autowired
     SolicitudesService solicitudesService;
 
+    @GetMapping("/delete/{idSolicitud}")
+    public String deleteVacante(@PathVariable("idSolicitud") Integer idSolicitud,
+                                RedirectAttributes attributes
+    ) {
+        System.out.println("Vacante to delete: " + idSolicitud);
+        Optional optSolicitud = repositorySolicitudes.findById(idSolicitud);
+        if(optSolicitud.isPresent()){
+            repositorySolicitudes.deleteById(idSolicitud);
+            attributes.addFlashAttribute("msg","The solicitud has been deleted");
+        }else{
+            attributes.addFlashAttribute("msg","The solicitud do not exist");
+        }
+
+        return "redirect:/solicitudes/indexPaginate";
+    }
+
     @GetMapping("/create/{idVacante}")
     public String crear(@PathVariable("idVacante") Integer idVacante,
                         Model model){
@@ -115,9 +131,6 @@ public class SolicitudesController {
         for (Solicitudes s : listaSolicitudes) {
             System.out.println("Archivo attached: " + s.getArchivo());
         }
-
-        
-
 
         return "solicitudes/listSolicitudes";
     }

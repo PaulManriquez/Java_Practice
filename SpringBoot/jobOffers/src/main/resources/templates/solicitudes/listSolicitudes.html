@@ -27,7 +27,9 @@
 
     <main role="main">     
       <hr>
-      <div class="container"> 
+      <div class="container">
+
+        <div th:if="${msg != null}" class="alert alert-success" th:text="${msg}" role='alert'></div>
 
         <div class="card">
           <h4 class="card-header"><strong>Listado de Solicitudes de Empleo</strong></h4>              
@@ -48,11 +50,12 @@
                   <td th:text="${ptrSolicitud.vacante.nombre}"></td>
                   <td th:text="${ptrSolicitud.usuario.nombre}"></td>
                   <td th:text="${ptrSolicitud.fecha}"></td>
+                  <input type="hidden" name="idVacante" th:value="${ptrSolicitud.id}" />
                   <td>
                     <a href="#" class="btn btn-success btn-sm" role="button" title="Editar el registro."><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-success btn-sm confirmar" role="button" title="Eliminar el registro."><i class="fas fa-trash" aria-hidden="true"></i></a>
+                    <a th:href="@{/solicitudes/delete/{idSolicitud}(idSolicitud=${ptrSolicitud.id})}" class="btn btn-success btn-sm confirmar" role="button" title="Eliminar el registro."><i class="fas fa-trash" aria-hidden="true"></i></a>
                     <a href="#" class="btn btn-success btn-sm" role="button" title="Enviar correo electrónico al usuario."><i class="fas fa-envelope" aria-hidden="true"></i></a>
-                    <a th:href="@{/files/{archivo}(archivo=${ptrSolicitud.getArchivo})}" target="_blank" class="btn btn-success btn-sm" role="button" title="Descargar Curriculm Vitae."><i class="fas fa-download" aria-hidden="true"></i></a>
+                    <a th:href="@{/uploads/{archivo}(archivo=${ptrSolicitud.archivo})}" target="_blank" class="btn btn-success btn-sm" role="button" title="Descargar Curriculm Vitae."><i class="fas fa-download" aria-hidden="true"></i></a>
                   </td>
                 </tr>
 

@@ -152,7 +152,6 @@ public class homeController {
             RedirectAttributes attributes
     ){
 
-
         Optional optPerfil = repositoryPerfil.findById(1);
         if(optPerfil.isPresent()){
             Perfiles per = (Perfiles) optPerfil.get(); //Get the perfil concerning to this user

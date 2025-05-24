@@ -18,3 +18,15 @@ public class WebConfig implements WebMvcConfigurer {
             //                                                                          Windows: myapp-uploads/ , Linux :/myapp-uploads/
     }
 }
+// Map the virtual path "/uploads/**" to actual directories in the temp folder.
+//
+// When a user accesses a URL like:
+//     /uploads/BC64I6IKgit_learning_notes_no_emoji.pdf
+//
+// Spring will look for the file in this order:
+// 1. file:/tmp/myapp-uploads/BC64I6IKgit_learning_notes_no_emoji.pdf
+// 2. file:/tmp/myapp-uploads/files/BC64I6IKgit_learning_notes_no_emoji.pdf
+//
+// This allows serving static files from both base and subdirectories under /myapp-uploads/.
+// Subdirectories like "/uploads/files/filename.pdf" or "/uploads/images/photo.jpg" are supported.
+
