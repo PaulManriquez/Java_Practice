@@ -1,0 +1,8 @@
+Creating multiple contexts might make sense if:
+You're writing tests and need isolated environments.
+You're building a tool or plugin system with modular Spring applications loaded separately.
+You're working on a multi-tenant architecture where each tenant might need its own context (rare and advanced).
+
+Example:
+ConfigurableApplicationContext context1 = SpringApplication.run(AppConfig1.class);
+ConfigurableApplicationContext context2 = SpringApplication.run(AppConfig2.class);
