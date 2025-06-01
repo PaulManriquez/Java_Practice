@@ -14,9 +14,7 @@ public class Main {
 
 		ConfigurableApplicationContext context = SpringApplication.run(Main.class, args);
 
-		//=== If you invoke me explicity, you will see me
-		//BeanALazy lazyA = context.getBean(BeanALazy.class);
-
+		logger.info("SOMETHING");
 	}
 
 }
