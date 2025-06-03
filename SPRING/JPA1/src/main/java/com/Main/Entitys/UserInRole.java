@@ -15,11 +15,14 @@ public class UserInRole{
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name="user_id",referencedColumnName="id")
     private User user;
 
-    @JoinColumn(name="role_id")
+    @ManyToOne
+    @JoinColumn(name = "role_id",referencedColumnName="id")
     private Role role;
+
+
 
     public Integer getId() {
         return id;
