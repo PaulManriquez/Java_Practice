@@ -15,6 +15,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class Main implements ApplicationRunner {
 
+
 	@Autowired
 	private Faker faker;
 
@@ -30,7 +31,7 @@ public class Main implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args)throws Exception{
-		for(int i=0; i<10;i++){
+		for(int i=0; i<30;i++){
 			User user = new User();
 			user.setUsername(faker.name().username());
 			user.setPassword(faker.dragonBall().character());
