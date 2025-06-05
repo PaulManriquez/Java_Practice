@@ -1,0 +1,43 @@
+Recap: Fixing @Timed Metrics Not Showing in Spring Boot with Prometheus
+
+✅ What We Wanted to Do
+-----------------------
+Expose performance metrics for specific endpoints (e.g. `/users/getUsersByPage`) using the `@Timed` annotation with Spring Boot Actuator and Prometheus.
+
+🔍 The Problem
+--------------
+Despite annotating the controller method with `@Timed`, no custom metric (e.g. `get.users.page`) appeared in `/actuator/prometheus`. Only default system and Spring metrics were visible.
+
+🧪 Diagnosis
+------------
+- The `@Timed` annotation was present on the method.
+- The endpoint was called successfully and returned HTTP 200.
+- Spring Boot 3.5.0 and Micrometer Prometheus dependencies were correctly included.
+- Default metrics like `http_server_requests_seconds` showed up, but not the custom timer.
+- Missing was the integration between `@Timed` annotation and Spring AOP.
+
+🛠️ The Fix
+-----------
+1. Add the Spring AOP dependency to your `pom.xml` or `build.gradle`:
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+</dependency>
+
+package com.Main.Configs;
+
+import io.micrometer.core.aop.TimedAspect;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MetricsConfig {
+
+    @Bean
+    public TimedAspect timedAspect(MeterRegistry registry) {
+        return new TimedAspect(registry);
+    }
+}
