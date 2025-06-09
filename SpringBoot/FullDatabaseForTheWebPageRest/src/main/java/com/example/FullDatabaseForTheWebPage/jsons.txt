@@ -1,0 +1,5 @@
+==== CATEGORIAS
+{
+    "nombre":"LandOfConfusion",
+    "descripcion":"world we live in"
+}
