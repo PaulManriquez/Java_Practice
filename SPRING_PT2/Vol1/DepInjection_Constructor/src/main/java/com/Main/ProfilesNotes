@@ -1,0 +1,80 @@
+// ===================================================
+// SPRING PROFILES - IMPORTANT CONCEPTS SUMMARY
+// ===================================================
+
+// ✅ WHAT ARE SPRING PROFILES?
+// Spring Profiles allow you to define different configurations
+// for different environments (e.g., dev, test, prod).
+
+// ---------------------------------------------------
+// ✅ HOW TO ACTIVATE A PROFILE
+// ---------------------------------------------------
+
+// Option 1: In application.properties
+spring.profiles.active=dev
+
+// Option 2: Via command-line argument
+// java -jar myapp.jar --spring.profiles.active=prod
+
+// Option 3: As an environment variable
+// SPRING_PROFILES_ACTIVE=dev
+
+// ---------------------------------------------------
+// ✅ PROFILE-SPECIFIC PROPERTIES FILES
+// ---------------------------------------------------
+// Spring can automatically load the following:
+// - application.properties         (always loaded)
+// - application-dev.properties     (loaded when 'dev' is active)
+// - application-prod.properties    (loaded when 'prod' is active)
+// - application-test.properties    (loaded when 'test' is active)
+
+// These override or extend the default properties when the profile is active.
+
+// ---------------------------------------------------
+// ✅ @Profile ANNOTATION USAGE
+// ---------------------------------------------------
+// You can annotate Spring beans or configuration classes to load only
+// for specific profiles:
+
+@Profile("dev")
+@Component
+public class DevService {
+    // Loaded only when 'dev' profile is active
+}
+
+@Profile("prod")
+@Component
+public class ProdService {
+    // Loaded only when 'prod' profile is active
+}
+
+// ---------------------------------------------------
+// ✅ USE CASES
+// ---------------------------------------------------
+// - Use different DBs (H2 for dev, MySQL for prod)
+// - Use mock vs real services (MockEmailService vs SmtpEmailService)
+// - Set logging levels or ports by profile
+// - Enable/disable security features by environment
+
+// ---------------------------------------------------
+// ✅ BEST PRACTICES
+// ---------------------------------------------------
+// - Use profiles to isolate environment-specific logic
+// - Avoid hardcoded environment checks (e.g., if (env == "dev"))
+// - Combine with configuration classes and application-{profile}.properties
+// - Use @Profile to conditionally register beans
+
+// ---------------------------------------------------
+// ✅ QUICK SUMMARY TABLE
+// ---------------------------------------------------
+
+| Feature                      | Description                                 |
+|-----------------------------|---------------------------------------------|
+| spring.profiles.active      | Declares which profile is active            |
+| application-{profile}.props | Overrides settings for a given profile      |
+| @Profile("name")            | Loads bean/config only if profile is active |
+| Multiple profiles           | Can activate multiple: dev,feature-x        |
+
+// ===================================================
+// END OF SPRING PROFILES SUMMARY
+// ===================================================

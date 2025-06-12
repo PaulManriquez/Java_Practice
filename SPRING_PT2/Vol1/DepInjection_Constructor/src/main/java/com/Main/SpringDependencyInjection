@@ -1,0 +1,58 @@
+===============================
+ SPRING DEPENDENCY INJECTION
+===============================
+
+| Injection Type     | Description                                       | Syntax Example                         | Pros                                    | Cons                                   |
+|--------------------|---------------------------------------------------|----------------------------------------|-----------------------------------------|----------------------------------------|
+| Constructor        | Injects dependency via constructor                | @Autowired                             | - Immutable dependencies                 | - Verbose with many dependencies       |
+| Injection          | Preferred by Spring best practices                | public MyBean(Dep dep) {...}           | - Required dependencies clearly defined | - Harder to use with optional deps     |
+|                    |                                                   |                                        | - Better for unit testing               |                                        |
+|--------------------|---------------------------------------------------|----------------------------------------|-----------------------------------------|----------------------------------------|
+| Setter Injection   | Injects dependency via public setter method       | @Autowired                             | - Optional dependencies                  | - Can leave bean in partially built state |
+|                    |                                                   | public void setDep(Dep dep) {...}      | - Can re-inject/change after instantiation | - More verbose                         |
+|--------------------|---------------------------------------------------|----------------------------------------|-----------------------------------------|----------------------------------------|
+| Field Injection    | Injects dependency directly into the field        | @Autowired                             | - Very concise                           | - Not test-friendly (hard to mock)     |
+|                    | (no setter or constructor needed)                 | private Dep dep;                       | - Quick for small prototypes             | - Breaks encapsulation                 |
+|--------------------|---------------------------------------------------|----------------------------------------|-----------------------------------------|----------------------------------------|
+
+===============================
+ EXAMPLES
+===============================
+
+-- Constructor Injection --
+@Component
+public class MyBean {
+    private final Dep dep;
+
+    @Autowired
+    public MyBean(Dep dep) {
+        this.dep = dep;
+    }
+}
+
+-- Setter Injection --
+@Component
+public class MyBean {
+    private Dep dep;
+
+    @Autowired
+    public void setDep(Dep dep) {
+        this.dep = dep;
+    }
+}
+
+-- Field Injection --
+@Component
+public class MyBean {
+
+    @Autowired
+    private Dep dep;
+}
+
+===============================
+ RECOMMENDATIONS
+===============================
+
+- ✅ Use **constructor injection** when possible (preferred by Spring).
+- ⚠️ Use **setter injection** for optional dependencies or late binding.
+- 🚫 Avoid **field injection** in production (okay for small or quick setups).

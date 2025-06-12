@@ -1,0 +1,49 @@
+Notes:
+
+1.- @Primary is used to indicate witch bean should the
+constructor must implement, or you can also use a @Qualifier
+
+2.- Since more that one bean implement MessageService Interface
+there could occur an conflict to dont knowing witch one bean
+should implement, so use @Primary or @Cualifier [@Service("myQualifierName")]
+
+/*
+ ============================================================================
+ 🧠 QUICK REFERENCE: Constructor Injection & Functional Programming in Java
+ ============================================================================
+
+ ✅ 1. Constructor Injection
+    - Injects dependencies via constructor
+    - Promotes immutability and testability
+    - Spring auto-injects if only one constructor (no need for @Autowired)
+
+ ✅ 2. @Autowired
+    - Marks constructor, field, or setter for dependency injection
+    - Required only if multiple constructors or explicit annotation is needed
+
+ ✅ 3. @Qualifier
+    - Resolves ambiguity when multiple beans implement the same interface
+    - Example:
+        @Autowired
+        public MyClass(@Qualifier("smsService") MessageService service) { ... }
+
+ ✅ 4. @Service / @Component
+    - Marks a class as a Spring bean
+    - @Service is a specialized form of @Component (used for business logic)
+
+ ✅ 5. Spring Boot DI Behavior
+    - Automatically scans for @Component, @Service, etc.
+    - Injects matching beans where needed
+    - Use @Primary or @Qualifier to resolve conflicts
+
+ ✅ 6. Functional Interfaces
+    - Interfaces with a single abstract method
+    - Used with lambdas (e.g., Function<T,R>, Consumer<T>, Predicate<T>)
+
+ ✅ 7. Lambda Expressions
+    - Syntax: (params) -> expression or (params) -> { code block }
+    - Example:
+        Function<String, Integer> length = s -> s.length();
+
+ ============================================================================
+*/

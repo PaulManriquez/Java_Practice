@@ -1,0 +1,55 @@
+== SPRING CORE CONCEPTS ==
+
+------------------------------------------------------------
+1. Inversion of Control (IoC) and Dependency Injection (DI)
+------------------------------------------------------------
+
+What is IoC?
+-   Inversion of Control means that object creation
+    and management are handled by the
+    **Spring container**, not by the developer manually.
+
+What is DI?
+-   Dependency Injection is a way of applying IoC.
+    Spring **automatically injects** the required dependencies
+    (e.g., services, repositories) into your classes.
+
+--------------------------------------
+2. Bean Lifecycle in Spring Applications
+--------------------------------------
+Spring-managed beans go through a specific **lifecycle**,
+controlled by the ===`ApplicationContext`===
+
+Main phases of the bean lifecycle:
+
+1. Instantiation – Spring creates the bean instance.
+2. Dependency Injection – Spring injects required dependencies.
+3. Initialization – Executes methods annotated with `@PostConstruct` or implements `InitializingBean`.
+4. Bean Usage – The bean is now fully configured and in use.
+5. Destruction – Executes methods annotated with `@PreDestroy` or implements `DisposableBean`.
+
+------------------------------------------------------------
+3. Spring IoC Container (ApplicationContext)
+------------------------------------------------------------
+
+-   The IoC container is the **engine** that manages beans,
+    their lifecycle, and dependencies.
+-   It's an advanced implementation of
+    the Factory + Singleton design patterns,
+    driven by the IoC principle.
+
+How is it configured?
+- Through **annotations** (`@Component`, `@Service`, etc.)
+- Through **XML files** (used in legacy projects)
+- Through **Java config classes** (`@Configuration`, `@Bean`)
+
+--------------------
+== QUICK SUMMARY ==
+--------------------
+
+| Concept        | What it does                               | Example                        |
+|----------------|--------------------------------------------|--------------------------------|
+| IoC            | Spring controls object creation            | Spring instantiates your beans |
+| DI             | Injects class dependencies automatically   | Constructor, field, setter     |
+| Lifecycle      | Manages bean lifecycle stages              | `@PostConstruct`, `@PreDestroy`|
+| IoC Container  | Core engine that manages everything        | `ApplicationContext`           |
