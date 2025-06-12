@@ -1,0 +1,158 @@
+-   By default a bean is a singleton and his life is as
+    as much as the application context exist/lives
+
+// ===================================================
+// SPRING CORE - BEAN SCOPES SUMMARY
+// ===================================================
+
+// ✅ Singleton Scope (default)
+// - Only one instance per Spring context
+// - Ideal for stateless services
+
+// ✅ Prototype Scope
+// - A new instance is created every time it's requested from the context
+// - Use when you need stateful or disposable objects
+
+// ✅ Request Scope (Web only)
+// - One instance per HTTP request
+// - Must be used in web context (@RequestScope)
+
+// ✅ Session Scope (Web only)
+// - One instance per HTTP session
+// - Useful for user-specific state
+
+===================================================
+SPRING CORE NOTES - DEPENDENCY INJECTION & SCOPES
+===================================================
+
+==========================
+1. DEPENDENCY INJECTION
+==========================
+
+- Constructor Injection ✅ (recommended)
+    - Inject dependencies via constructor
+    - Best for required dependencies
+    - Promotes immutability
+    - Example:
+        @Autowired
+        public MyService(Dependency dep) { ... }
+
+- Setter Injection ✅
+    - Inject via public setter methods
+    - Best for optional or replaceable dependencies
+    - Allows changing the bean's dependency at runtime
+    - Example:
+        @Autowired
+        public void setDep(Dependency dep) { ... }
+
+- Field Injection ⚠️ (not recommended for production)
+    - Injects directly into fields using @Autowired
+    - Concise, but harder to test and violates encapsulation
+    - Example:
+        @Autowired
+        private Dependency dep;
+
+==========================
+2. SPRING BEAN SCOPES
+==========================
+
+- Singleton (default) ✅
+    - One instance per Spring ApplicationContext
+    - Shared across the app
+    - Best for stateless services
+    - Example:
+        @Component // default is singleton
+
+- Prototype
+    - New instance every time it's requested
+    - Use when you need stateful or disposable beans
+    - Spring does NOT manage destruction (e.g., @PreDestroy won't be called)
+    - Example:
+        @Component
+        @Scope("prototype")
+
+- Request (Web only)
+    - One instance per HTTP request
+    - Must use @RequestScope
+
+- Session (Web only)
+    - One instance per HTTP session
+    - Must use @SessionScope
+
+===============================
+3. OBJECT LIFECYCLE BEHAVIOR
+===============================
+
+- Singleton:
+    - Created once at application startup
+    - Lives until the context is destroyed
+    - Managed fully by Spring (init and destroy)
+
+- Prototype:
+    - Created each time it's requested
+    - NOT managed after creation
+    - You must handle cleanup manually
+
+==========================
+4. BEHAVIOR EXAMPLES
+==========================
+
+Console output for Singleton:
+
+    SingletonBean created: SingletonBean@1a2b3c
+    Using SingletonBean instance: SingletonBean@1a2b3c
+    Using SingletonBean instance: SingletonBean@1a2b3c
+
+Console output for Prototype:
+
+    PrototypeBean created: PrototypeBean@4d5e6f
+    Using PrototypeBean instance: PrototypeBean@4d5e6f
+    PrototypeBean created: PrototypeBean@7g8h9i
+    Using PrototypeBean instance: PrototypeBean@7g8h9i
+
+===============================
+5. ANALOGY (for easy memory)
+===============================
+
+- Singleton bean = A regular glass (reused by everyone)
+- Prototype bean = A disposable cup (new every time)
+
+==========================
+6. COMMANDLINERUNNER
+==========================
+
+- Implement CommandLineRunner to execute logic at startup
+- Good for testing or demoing bean behavior
+- Example:
+
+    @Component
+    public class DemoRunner implements CommandLineRunner {
+        public void run(String... args) {
+            singletonBean.action();
+            prototypeProvider.getObject().action();
+        }
+    }
+
+==========================
+7. SPRING PROFILES
+==========================
+
+- Use @Profile to define beans for specific environments
+- Activate profiles using:
+    - application.properties → spring.profiles.active=dev
+    - Command line → --spring.profiles.active=prod
+
+- Create environment-specific config files:
+    - application-dev.properties
+    - application-prod.properties
+
+- Example usage:
+    @Profile("dev")
+    @Service
+    public class DevEmailService implements EmailService { ... }
+
+===================================================
+END OF SPRING CORE - DI & SCOPES SUMMARY
+===================================================
+
+

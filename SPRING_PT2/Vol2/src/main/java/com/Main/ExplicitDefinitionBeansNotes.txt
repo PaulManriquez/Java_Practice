@@ -1,0 +1,87 @@
+==================================================
+SPRING CORE - EXPLICIT BEAN DEFINITION ( @Bean )
+==================================================
+
+✅ WHAT IS IT?
+
+- Instead of using annotations like @Component, @Service, etc.,
+  Spring allows you to define beans manually in a @Configuration class
+  using the @Bean annotation.
+
+- This is called **explicit bean definition**.
+
+--------------------------------------------------
+✅ WHY USE IT?
+
+- You need more control over how beans are created.
+- You want to inject or configure third-party (external) classes.
+- You prefer centralized configuration over component scanning.
+
+--------------------------------------------------
+✅ BASIC STRUCTURE
+
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public MyService myService() {
+        return new MyServiceImpl(); // Manual instantiation
+    }
+
+    @Bean
+    public MyController myController() {
+        return new MyController(myService()); // Manual injection
+    }
+}
+
+--------------------------------------------------
+✅ EXAMPLE WITH DEPENDENCY INJECTION
+
+@Configuration
+public class Config {
+
+    @Bean
+    public Engine engine() {
+        return new Engine("V8");
+    }
+
+    @Bean
+    public Car car() {
+        return new Car(engine()); // Injects Engine into Car
+    }
+}
+
+- Spring creates Engine first.
+- Then injects Engine into Car.
+
+--------------------------------------------------
+✅ ADVANTAGES
+
+| Benefit                     | Description                                      |
+|----------------------------|--------------------------------------------------|
+| Full control                | You decide how each bean is created             |
+| External class support      | Define beans for classes not annotated with @Component |
+| Clear configuration         | All bean definitions are in one place           |
+
+--------------------------------------------------
+✅ WHEN TO USE
+
+Use @Bean when:
+- You need custom logic during bean creation
+- You're working with legacy or 3rd-party code
+- You want more readable and centralized configs
+
+Use @Component / @Service when:
+- It's your own Spring-compatible class
+- You prefer convention over configuration
+
+--------------------------------------------------
+✅ REMEMBER
+
+- Each method annotated with @Bean is a factory method.
+- Spring only calls it once by default (singleton scope).
+- The return object is registered in the ApplicationContext.
+
+==================================================
+END OF NOTES - EXPLICIT BEAN DEFINITION
+==================================================
