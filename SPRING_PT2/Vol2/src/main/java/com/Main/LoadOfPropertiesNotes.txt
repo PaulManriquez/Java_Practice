@@ -1,0 +1,117 @@
+/*
+//They do not represent "stored" values —
+    // they are just methods returning
+    // constant literals.
+===========================================================
+= SPRING BOOT - LOADING PROPERTIES (application.properties)
+===========================================================
+
+>> WHAT IS PROPERTY LOADING?
+Spring Boot supports externalizing configuration into property
+files (or YAML files). These values are injected into Java
+classes using annotations such as @Value or @ConfigurationProperties.
+
+This allows developers to:
+✔ Separate configuration from code
+✔ Easily change behavior per environment (dev, test, prod)
+✔ Reuse values in multiple parts of the application
+
+===========================================================
+= WHAT IS application.properties?
+===========================================================
+
+application.properties is the default configuration file
+in a Spring Boot project, located at:
+
+> src/main/resources/application.properties
+
+Spring Boot auto-loads this file at runtime and uses it
+to configure the application (e.g., ports, URLs, credentials,
+custom values, logging, etc.)
+
+===========================================================
+= WHY USE application.properties?
+===========================================================
+
+✔ Central place to manage app settings
+✔ Avoid hardcoding values in the codebase
+✔ Enables easy use of environment-specific profiles
+✔ Compatible with @Value and @ConfigurationProperties
+✔ Can override Spring defaults (server port, DB config, etc.)
+
+===========================================================
+= HOW TO DEFINE PROPERTIES (EXAMPLE)
+===========================================================
+
+# application.properties
+server.port=8081
+mail.host=smtp.example.com
+mail.port=587
+mail.username=user
+mail.password=secret
+
+===========================================================
+= HOW TO USE PROPERTIES IN CODE (USING @Value)
+===========================================================
+
+@Component
+public class MailService {
+
+    @Value("${mail.host}")
+    private String host;
+
+    @Value("${mail.port}")
+    private int port;
+
+    @Value("${mail.username}")
+    private String username;
+
+    @Value("${mail.password}")
+    private String password;
+
+    public void mostrarConfig() {
+        System.out.println("Host: " + host);
+        System.out.println("Puerto: " + port);
+        System.out.println("Usuario: " + username);
+        System.out.println("Contraseña: " + password);
+    }
+}
+
+===========================================================
+= OTHER PROPERTY INJECTION METHODS
+===========================================================
+
+1. @Value("${property.name}")
+   ✔ Simple value injection
+   ✔ Use for individual values
+
+2. @ConfigurationProperties(prefix = "your.prefix")
+   ✔ Binds a group of properties to a POJO
+   ✔ Clean and scalable for grouped settings
+
+3. Environment env.getProperty("key")
+   ✔ Dynamic access to properties
+   ✔ Useful in conditional logic or custom config classes
+
+===========================================================
+= CUSTOM PROPERTY FILES (OPTIONAL)
+===========================================================
+
+If needed, load custom .properties files like so:
+
+@PropertySource("classpath:custom.properties")
+@Configuration
+public class AppConfig { }
+
+===========================================================
+= SUMMARY
+===========================================================
+
+✔ Use application.properties to manage your app’s settings
+✔ Inject with @Value for simple cases
+✔ Use @ConfigurationProperties for structured configuration
+✔ Spring Boot loads application.properties automatically
+✔ Property loading helps cleanly separate config from logic
+
+===========================================================
+*/

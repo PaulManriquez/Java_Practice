@@ -1,0 +1,76 @@
+/*
+==================================================
+= SPRING - INJECTION OF MULTIPLE QUALIFIED BEANS =
+==================================================
+
+>> CONTEXT:
+When you have multiple beans implementing the same interface,
+Spring needs help deciding which one to inject.
+
+==================================================
+= KEY CONCEPTS =
+==================================================
+
+1. @Qualifier:
+   - Used to specify which exact bean to inject.
+   - Can be used on constructor parameters, fields, or setters.
+   - Must match the bean name or the qualifier annotation value.
+
+2. @Primary:
+   - Marks a bean as the default when multiple candidates exist.
+   - Only one bean per type should be marked as @Primary.
+   - Can be overridden with @Qualifier.
+
+3. Injecting Collections:
+   - You can inject a List<InterfaceType> or Map<String, InterfaceType>.
+   - Spring automatically fills the collection with all matching beans.
+
+4. Naming Beans:
+   - Use @Component("beanName") or @Bean(name = "beanName").
+   - This name can be referenced with @Qualifier("beanName").
+
+5. Order of Beans:
+   - Use @Order to specify the order when injecting a list.
+   - Or implement the Ordered interface.
+
+==================================================
+= BEST PRACTICES =
+==================================================
+
+✔ Always use descriptive names in @Qualifier.
+✔ Use @Primary to set a clear default.
+✔ Inject lists when you want all implementations.
+✔ Prefer constructor injection for immutability and clarity.
+✔ Keep interface-based design to support multiple beans cleanly.
+
+==================================================
+= COMMON ERRORS =
+==================================================
+
+✘ No qualifying bean error:
+    - Happens when Spring finds multiple beans and doesn’t know which to inject.
+    - Solution: Use @Qualifier or @Primary.
+
+✘ Bean not found for @Qualifier:
+    - Happens when the qualifier name doesn't match any registered bean.
+    - Solution: Double-check the bean name or annotation value.
+
+✘ Ambiguity when injecting collections:
+    - Order not guaranteed unless explicitly set with @Order.
+
+==================================================
+= EXAMPLE REFERENCE =
+==================================================
+
+@Autowired
+public Cliente(
+    @Qualifier("email") Servicio servicioEmail,
+    @Qualifier("sms") Servicio servicioSMS
+) {
+    this.servicioEmail = servicioEmail;
+    this.servicioSMS = servicioSMS;
+}
+
+==================================================
+
+*/

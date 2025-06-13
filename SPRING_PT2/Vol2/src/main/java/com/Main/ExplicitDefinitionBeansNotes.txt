@@ -1,3 +1,8 @@
+*Explicit declaration of a bean:
+    You manage the way how it will be instantiated
+
+*Implicit declaration of a bean:
+    You let to spring how it will be managed
 ==================================================
 SPRING CORE - EXPLICIT BEAN DEFINITION ( @Bean )
 ==================================================

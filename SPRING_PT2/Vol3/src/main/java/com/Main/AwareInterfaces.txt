@@ -1,0 +1,74 @@
+/*
+===========================================================
+= SPRING - AWARE INTERFACES + ENVIRONMENT.getProperty()  =
+===========================================================
+
+>> TOPIC 1: getProperty(key, defaultValue)
+
+Spring's Environment object allows access to external configuration
+(e.g., from application.properties).
+
+Example usage:
+-----------------------------------------------------------
+String appName = environment.getProperty("app.name", "DefaultApp");
+-----------------------------------------------------------
+
+Explanation:
+- First argument: key to look for ("app.name")
+- Second argument: default value if the key is NOT found
+- This prevents null values and provides safe fallback defaults
+
+Use case:
+- Protects the app from crashing due to missing config
+- Ensures predictable behavior in all environments
+
+Behavior:
+-----------------------------------------------------------
+If application.properties contains:
+  app.name=MyApp
+→ result: "MyApp"
+
+If the key is missing:
+→ result: "DefaultApp"
+-----------------------------------------------------------
+
+===========================================================
+= TOPIC 2: AWARE INTERFACES ANALOGY - "GIVING BEANS CONSCIOUSNESS"
+===========================================================
+
+Spring Aware interfaces let a bean know things about its environment.
+
+It's like giving a "robot" (your bean) some level of self-awareness.
+
+Analogy:
+-----------------------------------------------------------
+Interface                  | What the Bean "Knows"
+-----------------------------------------------------------
+BeanNameAware             | "I know what I'm called."
+ApplicationContextAware   | "I can see the other beans."
+EnvironmentAware          | "I can sense the external environment."
+ResourceLoaderAware       | "I know where the tools/files are."
+ServletContextAware       | "I know I'm in a web server."
+-----------------------------------------------------------
+
+These interfaces let the bean react based on its context
+without hardcoding dependencies.
+
+They are used when:
+✔ You need dynamic runtime behavior
+✔ You want access to Spring internals
+✔ You're building infrastructure or framework-level components
+
+They are NOT needed for typical business logic:
+✘ Prefer @Autowired or constructor injection for simple use cases
+
+===========================================================
+= FINAL NOTE
+===========================================================
+
+✔ Use getProperty("key", "default") to safely access config
+✔ Aware interfaces give beans "limited awareness"
+✔ Avoid abusing them — use only when necessary
+
+===========================================================
+*/

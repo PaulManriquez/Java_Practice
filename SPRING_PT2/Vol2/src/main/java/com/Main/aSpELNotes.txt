@@ -1,0 +1,77 @@
+/*
+===========================================================
+= SPRING BOOT - VALUE PERSISTENCE IN BEANS                =
+===========================================================
+
+QUESTION:
+---------
+Do the values returned from methods like getNombre() and
+getAge() in a @Component bean persist for the entire
+lifecycle of the application context?
+
+===========================================================
+= EXAMPLE 1: Stateless Bean (returns literals)
+===========================================================
+
+@Component
+public class Usuario {
+    public String getNombre() {
+        return "Juan"; // Recalculated every time
+    }
+
+    public Integer getAge() {
+        return 19; // Not stored as a field
+    }
+}
+
+RESULT:
+- These are hardcoded return values.
+- Not stored in memory; re-evaluated each time the method is called.
+- No persistent state.
+
+===========================================================
+= EXAMPLE 2: Stateful Bean (stored in fields)
+===========================================================
+
+@Component
+public class Usuario {
+
+    private String nombre = "Juan";
+    private Integer age = 19;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+}
+
+RESULT:
+- Values are stored in the bean’s memory.
+- Bean is singleton by default (@Component).
+- Values persist as long as the application context is alive.
+- You can modify the state using setters at runtime if needed.
+
+===========================================================
+= KEY CONCEPTS
+===========================================================
+
+✔ @Component beans are singleton by default in Spring Boot.
+✔ Method return values like "Juan" are not stored unless
+  assigned to instance variables.
+✔ If you want values to persist in memory, store them
+  in fields.
+✔ The singleton bean itself lives for the entire app context.
+
+===========================================================
+*/

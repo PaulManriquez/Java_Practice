@@ -1,0 +1,96 @@
+/*
+==================================================
+= SPRING - INJECTING MAPS AND ORDERING BEANS     =
+==================================================
+
+>> CONTEXT:
+When you have multiple beans of the same interface and want to
+access them by name, Spring allows injecting a Map<String, Bean>.
+
+==================================================
+= INJECTING A MAP =
+==================================================
+
+@Autowired
+public void setDevices(Map<String, TurnOnOFF> devices) {
+    this.devices = devices;
+
+    for (Map.Entry<String, TurnOnOFF> entry : devices.entrySet()) {
+        String name = entry.getKey();
+        TurnOnOFF device = entry.getValue();
+        System.out.println("[" + name + "] -> ");
+        device.turnOn();
+    }
+}
+
+>> What Spring Injects:
+Key   = Bean name (e.g. "tv", "light")
+Value = Instance of bean (e.g. TV, Light)
+
+>> Bean example:
+
+@Component("tv")
+public class TV implements TurnOnOFF {
+    public void turnOn() {
+        System.out.println("TV encendida");
+    }
+}
+
+==================================================
+= ORDERING BEANS =
+==================================================
+
+>> IMPORTANT:
+@Order and Ordered *only affect Lists*, not Maps directly.
+
+✔ Use @Order(N) on beans to define execution order when injecting a List<BeanType>
+✔ Lower numbers mean higher priority (executed earlier)
+✔ You can also implement the Ordered interface with getOrder()
+
+>> Example with @Order:
+
+@Component
+@Order(1)
+public class TV implements TurnOnOFF { ... }
+
+@Component
+@Order(2)
+public class Light implements TurnOnOFF { ... }
+
+>> Injecting as List for ordered execution:
+
+@Autowired
+public DeviceManager(List<TurnOnOFF> devices) {
+    this.devices = devices;
+    for (TurnOnOFF device : devices) {
+        device.turnOn();
+    }
+}
+
+==================================================
+= NOTES =
+==================================================
+
+✔ Use Map<String, BeanType> for name-based lookup or labeling
+✔ Use List<BeanType> + @Order for ordered execution
+✘ @Order has NO EFFECT on Maps — order must be handled manually if needed
+✔ For consistent map iteration order, consider LinkedHashMap or sort manually
+
+==================================================
+= COMBINING MAP + ORDER (MANUAL SORT) =
+==================================================
+
+You can sort map values manually by creating a new ordered map:
+
+Map<String, TurnOnOFF> sorted = map.entrySet().stream()
+    .sorted(Comparator.comparingInt(e -> ((Ordered) e.getValue()).getOrder()))
+    .collect(Collectors.toMap(
+        Map.Entry::getKey,
+        Map.Entry::getValue,
+        (e1, e2) -> e1,
+        LinkedHashMap::new
+    ));
+
+==================================================
+
+*/

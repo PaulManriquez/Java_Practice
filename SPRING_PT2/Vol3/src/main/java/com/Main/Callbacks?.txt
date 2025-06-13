@@ -1,0 +1,74 @@
+/*
+===========================================================
+= CALLBACKS IN JAVA AND SPRING                            =
+===========================================================
+
+1. WHAT IS A CALLBACK?
+---------------------
+- A callback is a piece of code (usually a method) that is
+  passed to another piece of code to be invoked later.
+- Often used when some event happens or a task completes.
+- Simply put:
+    "You give me your method, and I promise to call it when something happens."
+
+2. KEY CHARACTERISTICS
+----------------------
+✔ Inversion of Control:
+  - You provide a method, but you don’t call it directly.
+  - Another piece of code calls it when appropriate.
+
+✔ Decoupling:
+  - The code that triggers an event and the code that handles it
+    are loosely coupled.
+
+✔ Can be synchronous or asynchronous:
+  - Callbacks may be called immediately or after some processing.
+
+3. CALLBACKS IN SPRING
+----------------------
+- Spring uses callbacks primarily to manage bean lifecycle events.
+- Common ways to implement callbacks in Spring beans:
+
+  a) Implementing lifecycle interfaces:
+     - InitializingBean (method: afterPropertiesSet())
+     - DisposableBean (method: destroy())
+
+  b) Using annotations:
+     - @PostConstruct : called after the bean is initialized and dependencies injected.
+     - @PreDestroy   : called before the bean is destroyed (e.g., when app shuts down).
+
+  c) BeanPostProcessor:
+     - Special callback interface to customize bean creation logic.
+
+4. EXAMPLE: USING @PostConstruct AND @PreDestroy
+
+@Component
+public class MyBean {
+
+    @PostConstruct
+    public void init() {
+        System.out.println("Bean initialized!");
+    }
+
+    @PreDestroy
+    public void cleanup() {
+        System.out.println("Bean is about to be destroyed!");
+    }
+}
+
+5. WHY USE CALLBACKS IN SPRING?
+-------------------------------
+- To perform custom initialization or cleanup logic.
+- To react to lifecycle events without manual intervention.
+- To integrate with Spring’s container lifecycle for robust resource management.
+
+6. ADDITIONAL NOTES
+-------------------
+- Callbacks help implement event-driven and reactive programming models.
+- They improve decoupling and flexibility of the code.
+- Avoid overusing callbacks in business logic; prefer dependency injection
+  for clearer code.
+- Callbacks may also be used in asynchronous processing (e.g., messaging, events).
+
+===========================================================
+*/
