@@ -1,0 +1,47 @@
+// JavaBeans and Spring Beans - Summary
+
+// 1. JavaBean (Standard Java Concept):
+// - A reusable software component in Java.
+// - Follows specific conventions:
+//   - Public no-argument constructor
+//   - Private fields
+//   - Public getters and setters
+//   - Often implements Serializable
+// - Used for encapsulating data, especially in frameworks and UI builders.
+
+// 2. Spring Bean (Spring Framework Concept):
+// - Any object managed by the Spring Inversion of Control (IoC) container.
+// - Declared using annotations like @Component, @Service, @Repository,
+//   or @Bean in a @Configuration class.
+// - Not required to follow JavaBean conventions strictly.
+
+// 3. Dependency Injection in Spring:
+// - Beans can depend on other beans.
+// - Spring injects dependencies automatically, often through constructor injection.
+// - Example:
+//
+//   @Component
+//   public class OrderService {
+//       private final UserService userService;
+//       private final PaymentService paymentService;
+//
+//       public OrderService(UserService userService, PaymentService paymentService) {
+//           this.userService = userService;
+//           this.paymentService = paymentService;
+//       }
+//   }
+//
+// - In this case, OrderService is a bean that depends on UserService and PaymentService,
+//   which are also beans.
+
+// 4. "Pure" or "Independent" Beans:
+// - Some beans do not depend on others (like simple utilities).
+// - Other beans are composed of multiple beans (dependencies).
+// - All beans, whether simple or composite, are created and managed
+//   by the Spring container — not by each other.
+
+// Conclusion:
+// - JavaBeans are about Java class structure.
+// - Spring beans are about how objects are managed and injected by the Spring container.
+// - A Spring bean can be a simple, independent object or a composite
+//   that relies on other beans via dependency injection.
