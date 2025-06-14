@@ -1,0 +1,86 @@
+/*
+===========================================================
+= SPRING BEAN LIFECYCLE: LAZY vs EAGER BEANS              =
+===========================================================
+
+1. WHAT IS A LAZY BEAN?
+------------------------
+- A lazy bean is NOT created during Spring startup.
+- It is instantiated ONLY when first accessed (used or injected).
+
+To define a lazy bean:
+------------------------
+@Component
+@Lazy
+public class LazyService {
+    ...
+}
+
+You can also inject lazily:
+----------------------------
+@Autowired
+@Lazy
+private LazyService lazyService;
+
+===========================================================
+2. DOES A LAZY BEAN STAY ALIVE ONCE CREATED?
+---------------------------------------------
+✔ YES — if it is a singleton (default scope in Spring).
+
+Explanation:
+- The bean is added to the Spring context upon first use.
+- After that, it behaves exactly like an eager singleton.
+- It remains in memory until the application context is closed.
+
+EXAMPLE:
+@Component
+@Lazy
+public class LazyBean {
+    public LazyBean() {
+        System.out.println("Created");
+    }
+}
+
+→ Bean is created only when requested
+→ After creation, it lives for the full app lifecycle
+
+===========================================================
+3. DIFFERENCE WITH PROTOTYPE SCOPE
+-----------------------------------
+If the bean is also marked with @Scope("prototype"):
+
+@Component
+@Lazy
+@Scope("prototype")
+public class LazyPrototypeBean {
+    ...
+}
+
+Then:
+- A NEW INSTANCE is created each time the bean is requested
+- It is NOT stored in the application context
+- It is garbage-collected when no longer in use
+
+===========================================================
+4. BEAN LIFETIME SUMMARY
+-------------------------
+
+| Bean Type          | When It's Created     | How Long It Lives                     |
+|--------------------|------------------------|----------------------------------------|
+| Lazy Singleton     | When first accessed    | Until app shutdown (singleton scope)   |
+| Eager Singleton    | On context startup     | Until app shutdown                     |
+| Lazy Prototype     | When accessed          | Temporary, garbage-collected           |
+
+===========================================================
+5. WHEN TO USE LAZY BEANS?
+---------------------------
+✅ Improves startup time (especially for heavy beans)
+✅ Useful for conditional or rarely used services
+✅ Helps with performance in large applications
+
+❌ Don’t use if:
+   - You need the bean ready at startup
+   - You want early failure on configuration errors
+
+===========================================================
+*/

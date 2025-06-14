@@ -1,0 +1,85 @@
+/*
+===========================================================
+= SPRING LIFECYCLE CALLBACKS: @PostConstruct vs Interfaces
+===========================================================
+
+1. PURPOSE
+----------
+Spring allows beans to perform custom logic:
+- Right after initialization
+- Just before destruction
+
+There are two equivalent approaches:
+
+| PURPOSE               | INTERFACE METHOD                 | ANNOTATION METHOD       |
+|-----------------------|----------------------------------|-------------------------|
+| After initialization  | InitializingBean.afterPropertiesSet() | @PostConstruct      |
+| Before destruction    | DisposableBean.destroy()         | @PreDestroy            |
+
+===========================================================
+2. FUNCTIONAL EQUIVALENCE
+--------------------------
+✔ Both styles allow you to hook into the bean lifecycle.
+✔ Use them to open/close connections, load data, release resources, etc.
+
+Example with INTERFACES:
+-------------------------
+@Component
+public class MyBean implements InitializingBean, DisposableBean {
+
+    @Override
+    public void afterPropertiesSet() {
+        System.out.println("Bean initialized");
+    }
+
+    @Override
+    public void destroy() {
+        System.out.println("Bean is about to be destroyed");
+    }
+}
+
+Example with ANNOTATIONS:
+--------------------------
+@Component
+public class MyBean {
+
+    @PostConstruct
+    public void init() {
+        System.out.println("Bean initialized");
+    }
+
+    @PreDestroy
+    public void cleanup() {
+        System.out.println("Bean is about to be destroyed");
+    }
+}
+
+===========================================================
+3. COMPARISON: INTERFACE VS ANNOTATION
+---------------------------------------
+
+| Feature                | @PostConstruct / @PreDestroy   | InitializingBean / DisposableBean |
+|------------------------|-------------------------------|------------------------------------|
+| Simpler syntax         | ✅ Yes                         | ❌ No                             |
+| Spring-specific        | ❌ No (Jakarta EE standard)     | ✅ Yes                            |
+| Multiple lifecycle methods | ✅ Yes                    | ❌ One method per interface        |
+| Method name flexibility | ✅ Any name allowed            | ❌ Fixed method names              |
+| Loose coupling         | ✅ Better                      | ❌ Tighter to Spring               |
+| Better for testing     | ✅ Yes                         | ❌ More rigid                      |
+
+===========================================================
+4. WHEN TO USE WHICH?
+-----------------------
+
+✔ Use @PostConstruct / @PreDestroy when:
+  - You're writing business logic
+  - You want cleaner, decoupled, readable code
+  - You want portability (Jakarta EE standard)
+
+✔ Use InitializingBean / DisposableBean when:
+  - You're building Spring infrastructure
+  - You want to avoid reflection (annotations)
+  - You need deeper integration with Spring's lifecycle
+
+===========================================================
+*/

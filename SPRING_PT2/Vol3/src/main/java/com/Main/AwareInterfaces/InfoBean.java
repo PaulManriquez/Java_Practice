@@ -3,10 +3,13 @@ package com.Main.AwareInterfaces;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+//Aware interfaces enable a bean to access (be aware)
 @Component
+@Lazy // <== Disable this to see what happend
 public class InfoBean implements EnvironmentAware, BeanNameAware {
 
     private Environment environment;

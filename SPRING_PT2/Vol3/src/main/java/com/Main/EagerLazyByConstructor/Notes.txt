@@ -1,0 +1,2 @@
+Automatically if we set a Lazy bean inside a eager constructor
+it is called and wired in the spring context

@@ -1,0 +1,74 @@
+/*
+===========================================================
+= SPRING BEANPOSTPROCESSOR - FUNDAMENTALS
+===========================================================
+
+1. WHAT IS A BEANPOSTPROCESSOR?
+-------------------------------
+- A BeanPostProcessor is a Spring interface to provide
+  custom modification logic before and after Spring
+  initializes a bean.
+
+- It allows you to intercept bean creation lifecycle and
+  add your own behavior, modify or replace beans.
+
+- Interface:
+  public interface BeanPostProcessor {
+      Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException;
+      Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException;
+  }
+
+2. WHEN ARE THE METHODS CALLED?
+-------------------------------
+- postProcessBeforeInitialization:
+  Called **before** the bean’s @PostConstruct or
+  InitializingBean.afterPropertiesSet()
+
+- postProcessAfterInitialization:
+  Called **after** the bean is fully initialized and ready
+  to use.
+
+3. COMMON USE CASES
+-------------------
+- Implement custom proxying (e.g., AOP proxies)
+- Modify bean properties dynamically
+- Perform additional validation or setup
+- Replace beans with subclasses or decorators
+- Register beans for monitoring or metrics
+
+4. HOW TO USE
+-------------
+- Create a class implementing BeanPostProcessor
+- Register it as a Spring bean (@Component or config)
+- Override one or both methods
+
+Example:
+
+@Component
+public class CustomBeanPostProcessor implements BeanPostProcessor {
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) {
+        System.out.println("Before init: " + beanName);
+        return bean;  // return the bean instance or a proxy
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) {
+        System.out.println("After init: " + beanName);
+        return bean;  // return the bean instance or a proxy
+    }
+}
+
+5. NOTES
+---------
+- The returned object can be the original bean or a proxy/wrapper.
+- Multiple BeanPostProcessors can be defined; order can be
+  controlled with @Order or Ordered interface.
+- Used heavily by Spring internally (e.g., for @Autowired,
+  @Async, @Transactional proxies).
+- Be careful with modifying beans in these methods to avoid
+  breaking bean lifecycle.
+
+===========================================================
+*/

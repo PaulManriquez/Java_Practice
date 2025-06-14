@@ -1,0 +1,106 @@
+/*
+===========================================================
+= SPRING LAZY BEANS & PROXIES: BEHIND THE SCENES
+===========================================================
+
+1. REGULAR EAGER BEAN INJECTION
+-------------------------------
+@Autowired
+private MyService service;
+
+- Spring creates MyService during context startup.
+- Injects the actual instance (not a proxy).
+- Constructor and @PostConstruct methods run immediately.
+
+===========================================================
+2. LAZY BEAN INJECTION: THE REAL MECHANISM
+-------------------------------------------
+@Autowired
+@Lazy
+private MyService service;
+
+- Spring injects a **proxy**, not the real MyService instance.
+- The real bean is NOT created at startup.
+- It stays dormant until a method is actually called.
+
+→ The proxy acts like a "middleman":
+  - Watches for usage
+  - On first use, it:
+      ✔ Instantiates the real bean
+      ✔ Wires dependencies
+      ✔ Runs @PostConstruct
+      ✔ Forwards the call
+
+===========================================================
+3. EXAMPLE OUTPUT ILLUSTRATION
+
+@Component
+@Lazy
+public class HeavyService {
+    public HeavyService() {
+        System.out.println("🔧 HeavyService constructor");
+    }
+
+    public void run() {
+        System.out.println("🏃 HeavyService running");
+    }
+}
+
+@Component
+public class AppRunner {
+
+    @Autowired
+    @Lazy
+    private HeavyService heavyService;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("AppRunner ready");
+        // No constructor call yet!
+    }
+
+    public void doSomething() {
+        heavyService.run(); // → now the bean is created
+    }
+}
+
+EXPECTED OUTPUT:
+----------------
+AppRunner ready
+🔧 HeavyService constructor
+🏃 HeavyService running
+
+===========================================================
+4. KEY CONCEPTS & BEHAVIOR SUMMARY
+----------------------------------
+
+| Question                                  | Answer                             |
+|------------------------------------------|-------------------------------------|
+| Is the bean created at injection time?   | ❌ No — proxy is injected instead   |
+| Is the bean constructor run at startup?  | ❌ Not until method is called       |
+| What is injected with @Lazy?             | ✅ A Spring-generated proxy         |
+| When is the real bean created?           | ✅ On first actual method call      |
+| Is the real bean reused afterwards?      | ✅ Yes, behaves like a singleton    |
+
+===========================================================
+5. ANALOGY: LAZY BEANS ARE LIKE DOORBELLS
+-----------------------------------------
+- Proxy = Doorbell
+- Real bean = Person inside
+- Pressing the doorbell (method call) wakes up the bean
+- Bean comes out and stays available
+
+===========================================================
+6. USE CASES FOR @Lazy
+-----------------------
+
+✔ Large beans not always needed
+✔ Improve startup time
+✔ Load conditionally depending on context
+
+CAUTION:
+- If never used, the bean is never created.
+- Works best with singleton beans (for prototype, Spring always creates new instances anyway).
+
+===========================================================
+*/
