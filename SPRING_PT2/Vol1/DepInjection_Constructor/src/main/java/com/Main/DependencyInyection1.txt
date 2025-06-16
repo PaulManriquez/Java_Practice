@@ -17,6 +17,18 @@ should implement, so use @Primary or @Cualifier [@Service("myQualifierName")]
     - Promotes immutability and testability
     - Spring auto-injects if only one constructor (no need for @Autowired)
 
+ ✅ 2. Setter Injection
+     Injects dependencies via public setter methods
+     Useful for optional dependencies
+     Requires explicit use of @Autowired unless using XML configuration
+     Allows for changing dependencies after bean construction (less safe)
+
+ ✅ 3. Field Injection
+     Injects dependencies directly into fields using @Autowired
+     Least preferred due to difficulty in testing and maintaining
+     Violates encapsulation (no constructor or setter for the dependency)
+     Easy and concise, but discouraged in large or complex applications
+
  ✅ 2. @Autowired
     - Marks constructor, field, or setter for dependency injection
     - Required only if multiple constructors or explicit annotation is needed

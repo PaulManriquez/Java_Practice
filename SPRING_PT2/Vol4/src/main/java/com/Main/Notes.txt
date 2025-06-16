@@ -1,0 +1,47 @@
+== Aspect-Oriented Programming (AOP) in Spring Boot ==
+
+- AOP allows separating cross-cutting concerns (like logging, security, transactions) from business logic.
+- It uses proxies to inject behavior before, after, or around method execution without modifying the method itself.
+- Keeps code clean, reusable, and easier to maintain.
+
+== Common Cross-Cutting Concerns ==
+
+- Logging: Track method calls, exceptions, and execution times.
+- Security: Enforce authentication/authorization before executing sensitive methods.
+- Transactions: Manage database transactions (begin, commit, rollback).
+- Caching: Store and reuse method results to improve performance.
+- Validation: Ensure input data meets certain rules.
+- Exception Handling: Standardize error management across layers.
+- Monitoring: Track performance metrics like execution time or resource usage.
+
+== AOP Core Concepts ==
+
+- Aspect: A reusable class containing cross-cutting logic.
+- Advice: Code that runs at a specific point (e.g., before, after, around a method).
+- Join Point: A point in the execution (e.g., a method call) where advice can run.
+- Pointcut: A pattern that matches join points (e.g., all methods in a package).
+- Weaving: The process of applying aspects to the target code (done at runtime via proxies).
+
+== Common Spring AOP Annotations ==
+
+- @Aspect – Marks a class as an aspect.
+- @Before – Runs advice before a method.
+- @After – Runs advice after a method completes.
+- @Around – Wraps method execution; can control if/when method runs.
+- @AfterReturning – Runs after method returns successfully.
+- @AfterThrowing – Runs if the method throws an exception.
+
+== Example: Logging Aspect ==
+@Aspect
+@Component
+public class LoggingAspect {
+    @Before("execution(* com.myapp.service.*.*(..))")
+    public void logBefore(JoinPoint joinPoint) {
+        System.out.println("Calling: " + joinPoint.getSignature());
+    }
+}
+
+== Summary ==
+- Cross-cutting concerns affect many parts of an app and are not core business logic.
+- AOP helps centralize and cleanly apply these concerns.
+- Common use cases: logging, transactions, security, validation, and caching.
